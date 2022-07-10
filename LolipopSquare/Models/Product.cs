@@ -18,6 +18,8 @@ namespace LolipopSquare.Models
         public string Description { get; set; }
         public bool Availability { get; set; }
         public string Image { get; set; }
-        
+
+        public Category Category { get; set; }
+
     }
 }
