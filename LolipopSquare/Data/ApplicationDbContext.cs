@@ -6,7 +6,7 @@ namespace LolipopSquare.Data
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions options) : base(options){}
-        DbSet<Product> Products { get; set; }
-        DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

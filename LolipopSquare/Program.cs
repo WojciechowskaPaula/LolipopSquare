@@ -1,4 +1,6 @@
 using LolipopSquare.Data;
+using LolipopSquare.Interface;
+using LolipopSquare.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,7 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("defaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(connectionString));
+builder.Services.AddTransient<IProductService, ProductService>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
