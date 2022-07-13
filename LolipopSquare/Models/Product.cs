@@ -5,6 +5,7 @@ namespace LolipopSquare.Models
     public class Product
     {
         [Key]
+        [Display(Name ="Product ID")]
         public int Id { get; set; }
 
         [Required]
@@ -17,10 +18,7 @@ namespace LolipopSquare.Models
         [MinLength(10, ErrorMessage ="Description must contains minimum 10 characters")]
         public string Description { get; set; }
         public bool Availability { get; set; }
-        public string Image { get; set; }
-
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-
     }
 }
