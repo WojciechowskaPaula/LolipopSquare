@@ -18,5 +18,16 @@ namespace LolipopSquare.Services
             var products = _dbContext.Products.ToList();
             return products;
         }
+
+        public ProductDetailVM GetProductById(int id)
+        {
+            var editData = _dbContext.Products.FirstOrDefault(x => x.Id == id);
+            ProductDetailVM detailVM = new ProductDetailVM();
+            detailVM.Id = editData.Id;
+            detailVM.Name = editData.Name;
+            detailVM.Price = editData.Price;
+            detailVM.Description = editData.Description;
+            return detailVM;
+        }
     }
 }
