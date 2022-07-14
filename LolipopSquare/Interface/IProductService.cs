@@ -5,5 +5,6 @@ namespace LolipopSquare.Interface
     public interface IProductService
     {
         IEnumerable<Product> GetAllProducts();
+        ProductDetailVM GetProductById(int id);
     }
 }

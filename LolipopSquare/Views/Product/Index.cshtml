@@ -13,6 +13,7 @@
             <th>Price</th>
             <th>Description</th>
             <th>Avaliability</th>
+            <th>Edit product</th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@
                 <td>@item.Price</td>
                 <td>@item.Description</td>
                 <td>@item.Availability</td>
+                <td><a class="btn btn-dark" asp-action="EditProductForm" asp-route-id="@item.Id" >Edit</a></td>
             </tr>
         }
     </tbody>

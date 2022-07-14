@@ -12,10 +12,18 @@ namespace LolipopSquare.Controllers
             _productService = productService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var products = _productService.GetAllProducts();
             return View(products);
+        }
+
+        [HttpGet]
+        public IActionResult EditProductForm(int id)
+        {
+            var edit = _productService.GetProductById(id);
+            return View(edit);
         }
     }
 }
