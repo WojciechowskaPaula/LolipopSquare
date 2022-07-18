@@ -6,5 +6,6 @@ namespace LolipopSquare.Interface
     {
         IEnumerable<Product> GetAllProducts();
         ProductDetailVM GetProductById(int id);
+        void UpdateProduct(ProductDetailVM productDetailVM);
     }
 }

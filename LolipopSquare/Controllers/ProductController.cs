@@ -1,4 +1,5 @@
 ﻿using LolipopSquare.Interface;
+using LolipopSquare.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LolipopSquare.Controllers
@@ -24,6 +25,14 @@ namespace LolipopSquare.Controllers
         {
             var edit = _productService.GetProductById(id);
             return View(edit);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateProduct(ProductDetailVM detailVM)
+        {
+             _productService.UpdateProduct(detailVM);
+            return RedirectToAction("Index");
         }
     }
 }

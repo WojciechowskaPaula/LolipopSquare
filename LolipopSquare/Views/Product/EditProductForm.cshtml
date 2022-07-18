@@ -1,4 +1,5 @@
 ﻿@model LolipopSquare.Models.ProductDetailVM
+@System.Globalization.CultureInfo.CurrentUICulture
 
 @{
     ViewData["Title"] = "EditProductForm";
@@ -10,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditProductForm">
+        <form asp-action="UpdateProduct" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -28,7 +29,6 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            
              <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="Availability" >
                 <label class="form-check-label" for="Availability">Availability</label>

@@ -29,5 +29,16 @@ namespace LolipopSquare.Services
             detailVM.Description = editData.Description;
             return detailVM;
         }
+
+        public void UpdateProduct(ProductDetailVM productDetailVM)
+        {
+            var productToUpdate = _dbContext.Products.FirstOrDefault(x => x.Id == productDetailVM.Id);
+            productToUpdate.Id = productDetailVM.Id;
+            productToUpdate.Name = productDetailVM.Name;
+            productToUpdate.Price = productDetailVM.Price;
+            productToUpdate.Description = productDetailVM.Description;
+            productToUpdate.Availability = productDetailVM.Availability;
+            _dbContext.SaveChanges();
+        }
     }
 }
