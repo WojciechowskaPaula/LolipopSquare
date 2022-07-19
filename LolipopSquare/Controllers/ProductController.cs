@@ -25,6 +25,7 @@ namespace LolipopSquare.Controllers
         public IActionResult EditProductForm(int id)
         {
             var edit = _productService.GetProductById(id);
+            
             return View(edit);
         }
 
@@ -44,6 +45,7 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddNewProduct(AddNewProductVM productVM)
         {
             _productService.AddNewProduct(productVM);

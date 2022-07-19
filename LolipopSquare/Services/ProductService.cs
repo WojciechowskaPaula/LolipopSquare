@@ -28,6 +28,7 @@ namespace LolipopSquare.Services
             detailVM.Name = editData.Name;
             detailVM.Price = editData.Price;
             detailVM.Description = editData.Description;
+            detailVM.Availability = editData.Availability;
             return detailVM;
         }
 
