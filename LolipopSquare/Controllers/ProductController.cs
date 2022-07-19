@@ -1,5 +1,6 @@
 ﻿using LolipopSquare.Interface;
 using LolipopSquare.Models;
+using LolipopSquare.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LolipopSquare.Controllers
@@ -32,6 +33,20 @@ namespace LolipopSquare.Controllers
         public IActionResult UpdateProduct(ProductDetailVM detailVM)
         {
              _productService.UpdateProduct(detailVM);
+            return RedirectToAction("Index");
+        }
+        
+        [HttpGet]
+        public IActionResult AddNewProductForm()
+        {
+            AddNewProductVM productVM = new AddNewProductVM();
+            return View(productVM);
+        }
+
+        [HttpPost]
+        public IActionResult AddNewProduct(AddNewProductVM productVM)
+        {
+            _productService.AddNewProduct(productVM);
             return RedirectToAction("Index");
         }
     }

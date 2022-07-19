@@ -1,6 +1,7 @@
 ﻿using LolipopSquare.Data;
 using LolipopSquare.Interface;
 using LolipopSquare.Models;
+using LolipopSquare.Models.ViewModels;
 
 namespace LolipopSquare.Services
 {
@@ -39,6 +40,19 @@ namespace LolipopSquare.Services
             productToUpdate.Description = productDetailVM.Description;
             productToUpdate.Availability = productDetailVM.Availability;
             _dbContext.SaveChanges();
+        }
+
+        public Product AddNewProduct(AddNewProductVM productVM)
+        {
+            Product newProduct = new Product();
+            newProduct.Name = productVM.Name;
+            newProduct.Price = productVM.Price;
+            newProduct.Description = productVM.Description;
+            newProduct.Availability = productVM.Availability;
+            newProduct.CategoryId = productVM.Category.Id;
+            _dbContext.Add(newProduct);
+            _dbContext.SaveChanges();
+            return newProduct;
         }
     }
 }

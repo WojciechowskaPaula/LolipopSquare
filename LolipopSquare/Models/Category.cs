@@ -10,6 +10,6 @@ namespace LolipopSquare.Models
         [Required]
         [Range(1,30)]
         public string Name { get; set; }
-        public Product Product { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }
