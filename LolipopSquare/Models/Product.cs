@@ -20,5 +20,6 @@ namespace LolipopSquare.Models
         public bool Availability { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public ICollection<Image> Images { get; set; }
     }
 }
