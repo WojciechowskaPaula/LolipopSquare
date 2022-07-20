@@ -13,6 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("defaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(connectionString));
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
