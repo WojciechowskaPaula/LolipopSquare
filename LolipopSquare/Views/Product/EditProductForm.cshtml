@@ -1,6 +1,4 @@
 ﻿@model ProductDetailVM
-@System.Globalization.CultureInfo.CurrentUICulture
-
 @{
     ViewData["Title"] = "EditProductForm";
 }
@@ -21,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" class="form-control" data-val-regex-pattern="^\d+(\,)\d{2}$" data-val-regex="Price must contains only digits and comma as a separator" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
