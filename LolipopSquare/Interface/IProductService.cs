@@ -9,5 +9,7 @@ namespace LolipopSquare.Interface
         ProductDetailVM GetProductById(int id);
         void UpdateProduct(ProductDetailVM productDetailVM);
         Product AddNewProduct(AddNewProductVM productVM);
+        void DeleteProduct(int id);
+        public DeleteProductVM GetProductByIdForDelete(int id);
     }
 }

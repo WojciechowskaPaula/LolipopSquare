@@ -55,5 +55,25 @@ namespace LolipopSquare.Services
             _dbContext.SaveChanges();
             return newProduct;
         }
+
+        public DeleteProductVM GetProductByIdForDelete(int id)
+        {
+            var productToRemove = _dbContext.Products.Where(x => x.Id == id).FirstOrDefault();
+            DeleteProductVM productVM = new DeleteProductVM();
+            productVM.Id = productToRemove.Id;
+            productVM.Name = productToRemove.Name;
+            productVM.Description = productToRemove.Description;
+            productVM.Price = productToRemove.Price;
+            return productVM;
+            
+        }
+
+        public void DeleteProduct(int id)
+        {
+            var productToDelete = _dbContext.Products.Where(x => x.Id == id).FirstOrDefault();
+            _dbContext.Remove(productToDelete);
+            _dbContext.SaveChanges();
+        }
+
     }
 }

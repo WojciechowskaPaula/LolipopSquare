@@ -25,7 +25,7 @@ namespace LolipopSquare.Controllers
         public IActionResult EditProductForm(int id)
         {
             var edit = _productService.GetProductById(id);
-            
+
             return View(edit);
         }
 
@@ -33,10 +33,10 @@ namespace LolipopSquare.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult UpdateProduct(ProductDetailVM detailVM)
         {
-             _productService.UpdateProduct(detailVM);
+            _productService.UpdateProduct(detailVM);
             return RedirectToAction("Index");
         }
-        
+
         [HttpGet]
         public IActionResult AddNewProductForm()
         {
@@ -49,6 +49,20 @@ namespace LolipopSquare.Controllers
         public IActionResult AddNewProduct(AddNewProductVM productVM)
         {
             _productService.AddNewProduct(productVM);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteProductForm(int productId)
+        {
+            var productToRemove = _productService.GetProductByIdForDelete(productId);
+            return View(productToRemove);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProduct(int productId)
+        {
+            _productService.DeleteProduct(productId);
             return RedirectToAction("Index");
         }
     }
