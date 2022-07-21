@@ -1,6 +1,5 @@
 ﻿using LolipopSquare.Models;
 using Microsoft.EntityFrameworkCore;
-using LolipopSquare.Models.ViewModels;
 
 namespace LolipopSquare.Data
 {
