@@ -37,5 +37,15 @@ namespace LolipopSquare.Services
             _applicationDb.SaveChanges();
             return categoryToUpdate;
         }
+
+        public Category AddNewCategory(AddNewCategoryVM newCategoryVM)
+        {
+            var newCategory = new Category();
+            newCategory.Id = newCategoryVM.Id;
+            newCategory.Name = newCategoryVM.Name;
+            _applicationDb.Add(newCategory);
+            _applicationDb.SaveChanges();
+            return (newCategory);
+        }
     }
 }

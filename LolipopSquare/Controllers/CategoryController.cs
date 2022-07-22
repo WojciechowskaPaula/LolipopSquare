@@ -34,5 +34,20 @@ namespace LolipopSquare.Controllers
             var categoryToUpdate = _categoryService.UpdateCategory(editCategoryVM);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult AddNewCategoryForm()
+        {
+            AddNewCategoryVM newCategoryVM = new AddNewCategoryVM();
+            return View(newCategoryVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddNew(AddNewCategoryVM addNewCategoryVM)
+        {
+            _categoryService.AddNewCategory(addNewCategoryVM);
+            return RedirectToAction("Index");
+        }
     }
 }
