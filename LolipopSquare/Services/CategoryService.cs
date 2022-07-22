@@ -20,7 +20,7 @@ namespace LolipopSquare.Services
             return listOfCategories;
         }
 
-       public EditCategoryVM GetCategoryById(int id)
+        public EditCategoryVM GetCategoryById(int id)
         {
             var category = _applicationDb.Categories.Where(x => x.Id == id).FirstOrDefault();
             EditCategoryVM editCategoryVm = new EditCategoryVM();
@@ -47,5 +47,22 @@ namespace LolipopSquare.Services
             _applicationDb.SaveChanges();
             return (newCategory);
         }
+
+        public DeleteCategoryVM GetCategoryByIdForDelete(int id)
+        {
+            var category = _applicationDb.Categories.Where(x => x.Id == id).FirstOrDefault();
+            DeleteCategoryVM deleteCategoryVM = new DeleteCategoryVM();
+            deleteCategoryVM.Id = category.Id;
+            deleteCategoryVM.Name = category.Name;
+            return deleteCategoryVM;
+        }
+
+        public void DeleteCategory(int id)
+        {
+           var categoryToRemove = _applicationDb.Categories.Where(x => x.Id == id).FirstOrDefault();
+            _applicationDb.Categories.Remove(categoryToRemove);
+            _applicationDb.SaveChanges();
+        }
     }
+
 }

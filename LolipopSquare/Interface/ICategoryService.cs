@@ -9,5 +9,7 @@ namespace LolipopSquare.Interface
         EditCategoryVM GetCategoryById(int id);
         Category UpdateCategory(EditCategoryVM editCategoryVM);
         Category AddNewCategory(AddNewCategoryVM newCategoryVM);
+        DeleteCategoryVM GetCategoryByIdForDelete(int id);
+        void DeleteCategory(int id);
     }
 }

@@ -11,6 +11,7 @@ namespace LolipopSquare.Controllers
         public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
+            
         }
 
         [HttpGet]
@@ -49,5 +50,22 @@ namespace LolipopSquare.Controllers
             _categoryService.AddNewCategory(addNewCategoryVM);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult DeleteCategory(int id)
+        {
+            var categoryToDelete = _categoryService.GetCategoryByIdForDelete(id);
+            return View(categoryToDelete);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            _categoryService.DeleteCategory(id);
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
