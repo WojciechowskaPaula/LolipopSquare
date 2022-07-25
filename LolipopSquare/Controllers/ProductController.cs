@@ -31,7 +31,7 @@ namespace LolipopSquare.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateProduct(ProductDetailVM detailVM)
+        public IActionResult UpdateProduct(ProductDetailsVM detailVM)
         {
             _productService.UpdateProduct(detailVM);
             return RedirectToAction("Index");
@@ -64,6 +64,13 @@ namespace LolipopSquare.Controllers
         {
             _productService.DeleteProduct(productId);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult DisplayProductDetails(int id)
+        {
+            var product = _productService.GetProductById(id);
+            product =_productService.GetProductDetails(id);
+            return View(product);
         }
     }
 }

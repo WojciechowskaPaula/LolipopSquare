@@ -15,6 +15,7 @@
             <th>Avaliability</th>
             <th>Edit product</th>
             <th>Delete product</th>
+            <th>Details</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
                 <td>@item.Availability</td>
                 <td><a class="btn btn-dark" asp-action="EditProductForm" asp-route-id="@item.Id" >Edit</a></td>
                 <td><a class="btn btn-danger" asp-action="DeleteProductForm" asp-route-productId="@item.Id">Delete</a> </td>
+                <td><a class="btn btn-primary" asp-action="DisplayProductDetails" asp-route-id = "@item.Id">Details</a> </td>
             </tr>
         }
     </tbody>

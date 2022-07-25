@@ -20,10 +20,10 @@ namespace LolipopSquare.Services
             return products;
         }
 
-        public ProductDetailVM GetProductById(int id)
+        public ProductDetailsVM GetProductById(int id)
         {
             var editData = _dbContext.Products.FirstOrDefault(x => x.Id == id);
-            ProductDetailVM detailVM = new ProductDetailVM();
+            ProductDetailsVM detailVM = new ProductDetailsVM();
             detailVM.Id = editData.Id;
             detailVM.Name = editData.Name;
             detailVM.Price = editData.Price;
@@ -32,7 +32,7 @@ namespace LolipopSquare.Services
             return detailVM;
         }
 
-        public void UpdateProduct(ProductDetailVM productDetailVM)
+        public void UpdateProduct(ProductDetailsVM productDetailVM)
         {
             var productToUpdate = _dbContext.Products.FirstOrDefault(x => x.Id == productDetailVM.Id);
             productToUpdate.Id = productDetailVM.Id;
@@ -75,5 +75,17 @@ namespace LolipopSquare.Services
             _dbContext.SaveChanges();
         }
 
+        public ProductDetailsVM GetProductDetails(int id)
+        {
+            var productToDisplay = _dbContext.Products.Where(x => x.Id == id).FirstOrDefault();
+            ProductDetailsVM productDetails = new ProductDetailsVM();
+            productDetails.Id = productToDisplay.Id;
+            productDetails.Name = productToDisplay.Name;
+            productDetails.Description = productToDisplay.Description;
+            productDetails.Price = productToDisplay.Price;
+            productDetails.Availability = productToDisplay.Availability;
+            return productDetails;
+
+        }
     }
 }

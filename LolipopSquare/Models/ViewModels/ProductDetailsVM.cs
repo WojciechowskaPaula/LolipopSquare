@@ -1,6 +1,6 @@
 ﻿namespace LolipopSquare.Models
 {
-    public class ProductDetailVM
+    public class ProductDetailsVM
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -63,6 +63,8 @@ namespace LolipopSquare.Services
             _applicationDb.Categories.Remove(categoryToRemove);
             _applicationDb.SaveChanges();
         }
+
+        
     }
 
 }
