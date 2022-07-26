@@ -25,7 +25,7 @@ namespace LolipopSquare.Controllers
         public IActionResult EditProductForm(int id)
         {
             var edit = _productService.GetProductById(id);
-
+            
             return View(edit);
         }
 
@@ -66,6 +66,7 @@ namespace LolipopSquare.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult DisplayProductDetails(int id)
         {
             var product = _productService.GetProductById(id);

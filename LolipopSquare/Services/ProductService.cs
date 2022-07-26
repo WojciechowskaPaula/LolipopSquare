@@ -29,6 +29,7 @@ namespace LolipopSquare.Services
             detailVM.Price = editData.Price;
             detailVM.Description = editData.Description;
             detailVM.Availability = editData.Availability;
+            
             return detailVM;
         }
 
@@ -51,6 +52,21 @@ namespace LolipopSquare.Services
             newProduct.Description = productVM.Description;
             newProduct.Availability = productVM.Availability;
             newProduct.CategoryId = productVM.Category.Id;
+
+            var listOfImages = new List<Image>();
+            foreach (var image in productVM.Images)
+            {
+                Image imageToAdd = new Image();
+                imageToAdd.ImageTitle = image.FileName;
+                MemoryStream ms = new MemoryStream();
+                image.CopyTo(ms);
+                imageToAdd.ImageData = ms.ToArray();
+                ms.Close();
+                ms.Dispose();
+                listOfImages.Add(imageToAdd);
+            }
+           newProduct.Images = listOfImages;
+
             _dbContext.Add(newProduct);
             _dbContext.SaveChanges();
             return newProduct;
