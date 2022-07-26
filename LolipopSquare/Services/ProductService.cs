@@ -94,14 +94,15 @@ namespace LolipopSquare.Services
         public ProductDetailsVM GetProductDetails(int id)
         {
             var productToDisplay = _dbContext.Products.Where(x => x.Id == id).FirstOrDefault();
+            var images = _dbContext.Images.Where(x => x.ProductId == id).ToList();
             ProductDetailsVM productDetails = new ProductDetailsVM();
             productDetails.Id = productToDisplay.Id;
             productDetails.Name = productToDisplay.Name;
             productDetails.Description = productToDisplay.Description;
             productDetails.Price = productToDisplay.Price;
             productDetails.Availability = productToDisplay.Availability;
+            productDetails.Images = images;
             return productDetails;
-
         }
     }
 }
