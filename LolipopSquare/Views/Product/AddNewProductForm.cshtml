@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddNewProductForm" method="post">
+        <form asp-action="AddNewProductForm" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             
             <input asp-for="Id" class="form-control" hidden/>
@@ -39,6 +39,13 @@
                     <input class="form-check-input" asp-for="Availability" /> @Html.DisplayNameFor(model => model.Availability)
                 </label>
             </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Images" class="control-label"></label>
+                <input type="file" multiple asp-for="Images" class="form-control" />
+                <span asp-validation-for="Images" class="text-danger"></span>
+            </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" asp-action="AddNewProduct" />
             </div>

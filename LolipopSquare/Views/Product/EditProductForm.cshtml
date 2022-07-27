@@ -1,4 +1,5 @@
-﻿@model ProductDetailsVM
+﻿@using LolipopSquare.Models.ViewModels
+@model ProductImageVM
 @{
     ViewData["Title"] = "EditProductForm";
 }
@@ -41,6 +42,17 @@
                 }
                
             </div>
+          <dl>
+        <dt>Images</dt>
+        <dd>
+            @foreach (var item in @Model.Images)
+            {
+                var imageBase64Data = Convert.ToBase64String(item.ImageData);
+                <img src="data:image/jpg;base64, @imageBase64Data" width="100px" height="150px" />
+                <button class="btn btn-danger" onclick="DeleteImg(@item.Id)">Delete</button>
+            }
+        </dd>
+    </dl>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -56,4 +68,14 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+<script>
+    function DeleteImg(id){
+        fetch('https://localhost:7243/Product/DeleteImg/?id=' + id,{
+            method: 'POST',
+        })
+        .then(res => res.text())
+        .then(res => window.location.reload())
+    }
+
+</script>
 }
