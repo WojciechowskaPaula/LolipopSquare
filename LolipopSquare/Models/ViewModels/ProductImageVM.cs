@@ -9,5 +9,6 @@
         public bool Availability { get; set; }
         public Category Category { get; set; }
         public IFormFile ImageData { get; set; }
+        public ICollection<Image> Images { get; set; }
     }
 }

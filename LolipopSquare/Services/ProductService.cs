@@ -20,27 +20,30 @@ namespace LolipopSquare.Services
             return products;
         }
 
-        public ProductDetailsVM GetProductById(int id)
+        public ProductImageVM GetProductById(int id)
         {
             var editData = _dbContext.Products.FirstOrDefault(x => x.Id == id);
-            ProductDetailsVM detailVM = new ProductDetailsVM();
+            var listOfImages = _dbContext.Images.Where(x => x.ProductId == id).ToList();
+            ProductImageVM detailVM = new ProductImageVM();
             detailVM.Id = editData.Id;
             detailVM.Name = editData.Name;
             detailVM.Price = editData.Price;
             detailVM.Description = editData.Description;
             detailVM.Availability = editData.Availability;
-            
+            detailVM.Images = listOfImages;
             return detailVM;
         }
 
         public void UpdateProduct(ProductDetailsVM productDetailVM)
         {
             var productToUpdate = _dbContext.Products.FirstOrDefault(x => x.Id == productDetailVM.Id);
+            var listOfImages = _dbContext.Images.Where(x => x.ProductId == productDetailVM.Id).ToList();
             productToUpdate.Id = productDetailVM.Id;
             productToUpdate.Name = productDetailVM.Name;
             productToUpdate.Price = productDetailVM.Price;
             productToUpdate.Description = productDetailVM.Description;
             productToUpdate.Availability = productDetailVM.Availability;
+            
             _dbContext.SaveChanges();
         }
 
@@ -65,7 +68,7 @@ namespace LolipopSquare.Services
                 ms.Dispose();
                 listOfImages.Add(imageToAdd);
             }
-           newProduct.Images = listOfImages;
+            newProduct.Images = listOfImages;
 
             _dbContext.Add(newProduct);
             _dbContext.SaveChanges();
@@ -83,14 +86,14 @@ namespace LolipopSquare.Services
             productVM.Price = productToRemove.Price;
             productVM.Images = productToRemove.Images;
             return productVM;
-            
+
         }
 
         public void DeleteProduct(int id)
         {
             var productToDelete = _dbContext.Products.Where(x => x.Id == id).FirstOrDefault();
-            var imagesToRemove = _dbContext.Images.Where(x=>x.ProductId == id).ToList();
-            foreach(var item in imagesToRemove)
+            var imagesToRemove = _dbContext.Images.Where(x => x.ProductId == id).ToList();
+            foreach (var item in imagesToRemove)
             {
                 _dbContext.Remove(item);
             }
@@ -110,6 +113,13 @@ namespace LolipopSquare.Services
             productDetails.Availability = productToDisplay.Availability;
             productDetails.Images = images;
             return productDetails;
+        }
+
+        public void DeleteSingleImg(int id)
+        {
+            var imageToRemove = _dbContext.Images.Where(x => x.Id == id).FirstOrDefault();
+            _dbContext.Images.Remove(imageToRemove);
+            _dbContext.SaveChanges();
         }
     }
 }

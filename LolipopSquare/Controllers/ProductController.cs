@@ -24,6 +24,7 @@ namespace LolipopSquare.Controllers
         [HttpGet]
         public IActionResult EditProductForm(int id)
         {
+            
             var edit = _productService.GetProductById(id);
             
             return View(edit);
@@ -71,6 +72,13 @@ namespace LolipopSquare.Controllers
         {
             var product =_productService.GetProductDetails(id);
             return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteImg(int id)
+        {
+            _productService.DeleteSingleImg(id);
+            return Ok();
         }
     }
 }
