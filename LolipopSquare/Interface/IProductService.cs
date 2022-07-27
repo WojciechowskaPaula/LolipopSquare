@@ -7,7 +7,7 @@ namespace LolipopSquare.Interface
     {
         IEnumerable<Product> GetAllProducts();
         ProductImageVM GetProductById(int id);
-        void UpdateProduct(ProductDetailsVM productDetailVM);
+        void UpdateProduct(ProductImageVM productImageVM);
         Product AddNewProduct(AddNewProductVM productVM);
         void DeleteProduct(int id);
         DeleteProductVM GetProductByIdForDelete(int id);

@@ -1,4 +1,6 @@
-﻿namespace LolipopSquare.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LolipopSquare.Models.ViewModels
 {
     public class ProductImageVM
     {
@@ -8,7 +10,9 @@
         public string Description { get; set; }
         public bool Availability { get; set; }
         public Category Category { get; set; }
-        public IFormFile ImageData { get; set; }
         public ICollection<Image> Images { get; set; }
+
+        [Display(Name ="Upload images")]
+        public List<IFormFile> NewImages { get; set; }
     }
 }

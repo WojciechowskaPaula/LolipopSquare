@@ -2,6 +2,7 @@
 using LolipopSquare.Interface;
 using LolipopSquare.Models;
 using LolipopSquare.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace LolipopSquare.Services
 {
@@ -34,16 +35,26 @@ namespace LolipopSquare.Services
             return detailVM;
         }
 
-        public void UpdateProduct(ProductDetailsVM productDetailVM)
+        public void UpdateProduct(ProductImageVM productImageVM)
         {
-            var productToUpdate = _dbContext.Products.FirstOrDefault(x => x.Id == productDetailVM.Id);
-            var listOfImages = _dbContext.Images.Where(x => x.ProductId == productDetailVM.Id).ToList();
-            productToUpdate.Id = productDetailVM.Id;
-            productToUpdate.Name = productDetailVM.Name;
-            productToUpdate.Price = productDetailVM.Price;
-            productToUpdate.Description = productDetailVM.Description;
-            productToUpdate.Availability = productDetailVM.Availability;
-            
+            var productToUpdate = _dbContext.Products.Include(x => x.Images).FirstOrDefault(x => x.Id == productImageVM.Id);
+            productToUpdate.Id = productImageVM.Id;
+            productToUpdate.Name = productImageVM.Name;
+            productToUpdate.Price = productImageVM.Price;
+            productToUpdate.Description = productImageVM.Description;
+            productToUpdate.Availability = productImageVM.Availability;
+            foreach (var item in productImageVM.NewImages)
+            {
+                Image imageToAdd = new Image();
+                imageToAdd.ImageTitle = item.FileName;
+                MemoryStream ms = new MemoryStream();
+                item.CopyTo(ms);
+                imageToAdd.ImageData = ms.ToArray();
+                ms.Close();
+                ms.Dispose();
+
+                productToUpdate.Images.Add(imageToAdd);
+            }
             _dbContext.SaveChanges();
         }
 
