@@ -75,11 +75,13 @@ namespace LolipopSquare.Services
         public DeleteProductVM GetProductByIdForDelete(int id)
         {
             var productToRemove = _dbContext.Products.Where(x => x.Id == id).FirstOrDefault();
+            var listOfImages = _dbContext.Images.Where(x => x.ProductId == id).ToList();
             DeleteProductVM productVM = new DeleteProductVM();
             productVM.Id = productToRemove.Id;
             productVM.Name = productToRemove.Name;
             productVM.Description = productToRemove.Description;
             productVM.Price = productToRemove.Price;
+            productVM.Images = productToRemove.Images;
             return productVM;
             
         }
@@ -87,6 +89,11 @@ namespace LolipopSquare.Services
         public void DeleteProduct(int id)
         {
             var productToDelete = _dbContext.Products.Where(x => x.Id == id).FirstOrDefault();
+            var imagesToRemove = _dbContext.Images.Where(x=>x.ProductId == id).ToList();
+            foreach(var item in imagesToRemove)
+            {
+                _dbContext.Remove(item);
+            }
             _dbContext.Remove(productToDelete);
             _dbContext.SaveChanges();
         }
