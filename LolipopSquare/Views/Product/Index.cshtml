@@ -1,36 +1,38 @@
-﻿@model IEnumerable<Product>
+﻿@using LolipopSquare.Models.ViewModels
+@model List<ProductVM>
 
 @{
     ViewData["Title"] = "List of Products";
 }
 
 <h3> List of all Products</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Product ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Avaliability</th>
-            <th>Edit product</th>
-            <th>Delete product</th>
-            <th>Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var item in Model)
+<div class="container">
+    <div class="row g-5">
+
+        @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Price</td>
-                <td>@item.Description</td>
-                <td>@item.Availability</td>
-                <td><a class="btn btn-dark" asp-action="EditProductForm" asp-route-id="@item.Id" >Edit</a></td>
-                <td><a class="btn btn-danger" asp-action="DeleteProductForm" asp-route-productId="@item.Id">Delete</a> </td>
-                <td><a class="btn btn-primary" asp-action="DisplayProductDetails" asp-route-id = "@item.Id">Details</a> </td>
-            </tr>
+            <div class="col-12 col-md-6 col-lg-2 d-flex align-items-stretch">
+                <div class="card" style="width: 11rem;">
+                    @{
+                        if (item.Images.Count >= 1)
+                        {
+                            var imageBase64Data = Convert.ToBase64String(item.Images.FirstOrDefault().ImageData);
+                            <img class="card-img-top" src="data:image/jpg;base64, @imageBase64Data" alt="Sweeties" />
+                        }
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Price</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="#" class="card-link btn btn-dark">Add to cart </a>
+                        <a href="#" class="card-link">Another link</a>
+                        <a class="btn btn-dark" asp-action="EditProductForm" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-primary" asp-action="DisplayProductDetails" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-danger" asp-action="DeleteProductForm" asp-route-productId="@item.Id">Delete</a>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

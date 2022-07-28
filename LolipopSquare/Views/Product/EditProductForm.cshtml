@@ -49,7 +49,7 @@
                         var imageBase64Data = Convert.ToBase64String(item.ImageData);
                         <img src="data:image/jpg;base64, @imageBase64Data" width="100px" height="150px" />
                         <div>
-                        <button class="btn btn-danger" onclick="DeleteImg(@item.Id)">Delete</button>
+                        <button type="button" class="btn btn-danger" onclick="DeleteImg(@item.Id)">Delete</button>
                         </div>
                     }
                 </dd>
@@ -77,11 +77,11 @@
 }
 <script>
     function DeleteImg(id){
-        fetch('https://localhost:7243/Product/DeleteImg/?id=' + id,{
+        fetch('https://localhost:7243/Product/DeleteImg?id=' + id,{
             method: 'POST',
         })
         .then(res => res.text())
-        .then(res => window.location.reload())
+        .then(res => window.location = window.location.href)
     }
 
 </script>

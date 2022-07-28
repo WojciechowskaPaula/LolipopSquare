@@ -15,10 +15,22 @@ namespace LolipopSquare.Services
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public List<ProductVM> GetAllProducts()
         {
-            var products = _dbContext.Products.ToList();
-            return products;
+            var products = _dbContext.Products.Include(product => product.Images).ToList();
+            List<ProductVM> listOfProducts = new List<ProductVM>();
+            foreach (var item in products)
+            {
+                ProductVM productVM = new ProductVM();
+                productVM.Id = item.Id;
+                productVM.Name = item.Name;
+                productVM.Price = item.Price;
+                productVM.Description = item.Description;
+                productVM.Availability = item.Availability;
+                productVM.Images = item.Images;
+                listOfProducts.Add(productVM);
+            }
+            return listOfProducts;
         }
 
         public ProductImageVM GetProductById(int id)
@@ -43,17 +55,20 @@ namespace LolipopSquare.Services
             productToUpdate.Price = productImageVM.Price;
             productToUpdate.Description = productImageVM.Description;
             productToUpdate.Availability = productImageVM.Availability;
-            foreach (var item in productImageVM.NewImages)
-            {
-                Image imageToAdd = new Image();
-                imageToAdd.ImageTitle = item.FileName;
-                MemoryStream ms = new MemoryStream();
-                item.CopyTo(ms);
-                imageToAdd.ImageData = ms.ToArray();
-                ms.Close();
-                ms.Dispose();
 
-                productToUpdate.Images.Add(imageToAdd);
+            if(productImageVM.Images != null)
+            {
+                foreach (var item in productImageVM.NewImages)
+                {
+                    Image imageToAdd = new Image();
+                    imageToAdd.ImageTitle = item.FileName;
+                    MemoryStream ms = new MemoryStream();
+                    item.CopyTo(ms);
+                    imageToAdd.ImageData = ms.ToArray();
+                    ms.Close();
+                    ms.Dispose();
+                    productToUpdate.Images.Add(imageToAdd);
+                }
             }
             _dbContext.SaveChanges();
         }
