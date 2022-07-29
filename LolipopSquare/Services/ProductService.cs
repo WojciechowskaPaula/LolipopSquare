@@ -38,15 +38,16 @@ namespace LolipopSquare.Services
 
         public ProductImageVM GetProductById(int id)
         {
-            var editData = _dbContext.Products.FirstOrDefault(x => x.Id == id);
-            var listOfImages = _dbContext.Images.Where(x => x.ProductId == id).ToList();
+            var editData = _dbContext.Products.Include(x=>x.Images).FirstOrDefault(x => x.Id == id);
+            var categories = _dbContext.Categories.ToList();
             ProductImageVM detailVM = new ProductImageVM();
             detailVM.Id = editData.Id;
             detailVM.Name = editData.Name;
             detailVM.Price = editData.Price;
             detailVM.Description = editData.Description;
             detailVM.Availability = editData.Availability;
-            detailVM.Images = listOfImages;
+            detailVM.Images = editData.Images;
+            detailVM.CategoryList = categories;
             return detailVM;
         }
 
@@ -58,6 +59,7 @@ namespace LolipopSquare.Services
             productToUpdate.Price = productImageVM.Price;
             productToUpdate.Description = productImageVM.Description;
             productToUpdate.Availability = productImageVM.Availability;
+            productToUpdate.CategoryId = productImageVM.Category.Id;
 
             if(productImageVM.Images != null)
             {
