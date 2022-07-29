@@ -41,8 +41,8 @@ namespace LolipopSquare.Controllers
         [HttpGet]
         public IActionResult AddNewProductForm()
         {
-            AddNewProductVM productVM = new AddNewProductVM();
-            return View(productVM);
+            var newProductVMAndCategory =_productService.GetNewProductVM();
+            return View(newProductVMAndCategory);
         }
 
         [HttpPost]

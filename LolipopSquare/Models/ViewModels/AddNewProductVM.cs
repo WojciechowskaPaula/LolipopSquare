@@ -8,6 +8,7 @@
         public string Description { get; set; }
         public bool Availability { get; set; }
         public Category Category { get; set; }
+        public List<Category> CategoryList { get; set; }
         public ICollection<IFormFile> Images { get; set; }
     }
 }
