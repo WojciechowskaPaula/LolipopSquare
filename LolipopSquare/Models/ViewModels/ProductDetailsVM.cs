@@ -1,4 +1,6 @@
-﻿namespace LolipopSquare.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LolipopSquare.Models
 {
     public class ProductDetailsVM
     {

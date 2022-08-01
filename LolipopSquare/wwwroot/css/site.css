@@ -14,5 +14,37 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+.names{
+    font-size: 16px;
+    font-weight:700;
+    margin-top: 10px;
+}
+
+.productName{
+    font-size: 30px;
+    margin-bottom:30px;
+    margin-top:10px;
+    font-weight:800;
+    text-align:center;
+
+}
+
+.buttonsEditAndExit{
+    margin-top: 20px;
+}
+
+.productCard {
+    border-style: solid;
+    border-width: 3px;
+    border-color: #558dffff;
+    background-color: #F7ECF7;
+}
+
+#imageMargin {
+    padding-left: 0px !important;
+
+}
+
