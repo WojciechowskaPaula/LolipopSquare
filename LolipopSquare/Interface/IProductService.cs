@@ -12,7 +12,7 @@ namespace LolipopSquare.Interface
         AddNewProductVM GetNewProductVM();
         void DeleteProduct(int id);
         DeleteProductVM GetProductByIdForDelete(int id);
-        ProductDetailsVM GetProductDetails(int id);
+        Task<ProductDetailsVM> GetProductDetails(int id);
         void DeleteSingleImg(int id);
     }
 }

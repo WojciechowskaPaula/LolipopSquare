@@ -22,7 +22,7 @@
 
         <div class="productName">@Html.DisplayFor(model => model.Name)</div><hr />
         <div class="names">@Html.DisplayNameFor(model => model.Price)</div>
-        <div>@Model.Price.ToString("C", CultureInfo.CurrentCulture)
+        <div>@Model.Price.ToString("C", new CultureInfo("de-DE")) | @Model.PriceInUsd.ToString("C", new CultureInfo("en-US")) | @Model.PriceInPLN.ToString("C", new CultureInfo("pl-PL"))
         <!--<span class="input-group-addon">€</span>-->
         </div>
         <div class="names">@Html.DisplayNameFor(model => model.Description)</div>

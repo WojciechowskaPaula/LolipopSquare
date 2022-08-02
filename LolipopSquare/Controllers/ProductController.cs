@@ -68,9 +68,9 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpGet]
-        public IActionResult DisplayProductDetails(int id)
+        public async Task<IActionResult> DisplayProductDetails(int id)
         {
-            var product =_productService.GetProductDetails(id);
+            var product = await _productService.GetProductDetails(id);
             return View(product);
         }
 
