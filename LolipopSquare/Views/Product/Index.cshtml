@@ -1,4 +1,5 @@
 ﻿@using LolipopSquare.Models.ViewModels
+@using System.Globalization
 @model List<ProductVM>
 
 @{
@@ -23,7 +24,7 @@
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>
                         <h6 class="card-subtitle"><a class ="card-link mb-2 text-muted" asp-controller="Category" asp-action="Index">@item.CategoryName</a></h6>
-                        <p class="card-text">@item.Price</p>
+                        <p class="card-text">@item.Price.ToString("C", new CultureInfo("de-DE"))</p>
                     </div>
                     <div class="card-body">
                         <a href="#" class="card-link btn btn-dark">Add to cart </a>

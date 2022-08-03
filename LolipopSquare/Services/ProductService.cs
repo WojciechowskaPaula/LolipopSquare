@@ -61,7 +61,7 @@ namespace LolipopSquare.Services
             productToUpdate.Availability = productImageVM.Availability;
             productToUpdate.CategoryId = productImageVM.Category.Id;
 
-            if(productImageVM.Images != null)
+            if(productImageVM.NewImages != null)
             {
                 foreach (var item in productImageVM.NewImages)
                 {

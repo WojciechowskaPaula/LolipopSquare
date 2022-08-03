@@ -41,6 +41,7 @@ body {
     border-width: 3px;
     border-color: #558dffff;
     background-color: #F7ECF7;
+    padding:20px;
 }
 
 #imageMargin {
@@ -48,3 +49,13 @@ body {
 
 }
 
+.formMargin{
+    margin-left:20px;
+}
+.picture{
+    margin-bottom:10px;
+}
+.imagesInEdit{
+    width:300px;
+    display:inline;
+}

@@ -13,7 +13,7 @@
                 @foreach (var item in @Model.Images)
                 {
                     var imageBase64Data = Convert.ToBase64String(item.ImageData);
-                    <img src="data:image/jpg;base64, @imageBase64Data" class="img-fluid pictures" />
+                    <img src="data:image/jpg;base64, @imageBase64Data" class="img-fluid pictures"  />
                 }
             </div>
         </div>

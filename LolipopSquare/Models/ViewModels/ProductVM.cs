@@ -11,6 +11,7 @@
         
         public ICollection<Image> Images { get; set; }
         public Image Image { get; set; } 
+        public decimal PriceInEU { get; set; }
         
     }
 }
