@@ -24,15 +24,18 @@ namespace LolipopSquare.Controllers
         [HttpGet]
         public IActionResult EditCategoryForm(int id)
         {
-            var categoryToEdit = _categoryService.GetCategoryById(id);
-            return View(categoryToEdit);
+                var categoryToEdit = _categoryService.GetCategoryById(id);
+                return View(categoryToEdit);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult UpdateCategory(EditCategoryVM editCategoryVM)
         {
-            var categoryToUpdate = _categoryService.UpdateCategory(editCategoryVM);
+            if (ModelState.IsValid)
+            {
+                var categoryToUpdate = _categoryService.UpdateCategory(editCategoryVM);
+            }
             return RedirectToAction("Index");
         }
 
@@ -47,7 +50,10 @@ namespace LolipopSquare.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddNew(AddNewCategoryVM addNewCategoryVM)
         {
-            _categoryService.AddNewCategory(addNewCategoryVM);
+            if (ModelState.IsValid)
+            {
+                _categoryService.AddNewCategory(addNewCategoryVM);
+            }
             return RedirectToAction("Index");
         }
 

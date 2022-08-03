@@ -34,7 +34,10 @@ namespace LolipopSquare.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult UpdateProduct(ProductImageVM productImageVM)
         {
-            _productService.UpdateProduct(productImageVM);
+            if (ModelState.IsValid)
+            {
+                _productService.UpdateProduct(productImageVM);
+            }
             return RedirectToAction("Index");
         }
 
@@ -49,7 +52,10 @@ namespace LolipopSquare.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddNewProduct(AddNewProductVM productVM)
         {
-            _productService.AddNewProduct(productVM);
+            if (ModelState.IsValid)
+            {
+                _productService.AddNewProduct(productVM);
+            }
             return RedirectToAction("Index");
         }
 
