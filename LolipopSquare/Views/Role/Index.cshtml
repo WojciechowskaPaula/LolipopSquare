@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<IdentityRole>
+
+
+<h1>All roles</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td><a class="btn btn-primary">Edit</a></td>
+                <td><a class="btn btn-danger">Delete</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-dark">Add new</a>

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LolipopSquare.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -19,12 +19,14 @@ namespace LolipopSquare.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var roles = _roleManager.Roles.ToList();
+            return View(roles);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+           
             return View();
         }  
         
@@ -38,6 +40,8 @@ namespace LolipopSquare.Controllers
             }
             return View();
         }
+
+
 
     }
 }
