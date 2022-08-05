@@ -1,6 +1,7 @@
 ﻿using LolipopSquare.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using LolipopSquare.Models.ViewModels;
 
 namespace LolipopSquare.Data
 {
@@ -11,5 +12,6 @@ namespace LolipopSquare.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<LolipopSquare.Models.ViewModels.ProjectRolesVM>? ProjectRolesVM { get; set; }
     }
 }
