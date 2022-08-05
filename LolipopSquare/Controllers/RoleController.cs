@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LolipopSquare.Controllers
 {
-    //[Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
