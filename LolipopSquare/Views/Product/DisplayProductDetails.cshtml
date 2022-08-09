@@ -28,7 +28,8 @@
         <div class="names">@Html.DisplayNameFor(model => model.Availability)</div>
         <div>@Html.DisplayFor(model => model.Availability)</div>
         <div class="buttonsEditAndExit">
-            <a class="btn btn-success" asp-action="">Add to card</a>
+
+            <a class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddItem" asp-route-productId="@Model.Id">Add to card</a>
             <a asp-action="EditProductForm" asp-route-id="@Model.Id">Edit</a> |
             <a asp-action="Index">Back to List</a>
         </div>
