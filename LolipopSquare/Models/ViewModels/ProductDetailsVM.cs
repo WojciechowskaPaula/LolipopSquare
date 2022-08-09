@@ -10,6 +10,5 @@ namespace LolipopSquare.Models
         public string Description { get; set; }
         public bool Availability { get; set; }
         public ICollection<Image> Images { get; set; }
-        
     }
 }

@@ -18,7 +18,7 @@ namespace LolipopSquare.Services
 
         public List<ProductVM> GetAllProducts()
         {
-            var products = _dbContext.Products.Include(product => product.Images).Include(y=>y.Category).ToList();
+            var products = _dbContext.Products.Include(product => product.Images).Include(y => y.Category).ToList();
             List<ProductVM> listOfProducts = new List<ProductVM>();
             foreach (var item in products)
             {
@@ -31,7 +31,7 @@ namespace LolipopSquare.Services
                 productVM.Images = item.Images;
                 productVM.CategoryName = item.Category.Name;
                 listOfProducts.Add(productVM);
-               
+
             }
             return listOfProducts;
         }

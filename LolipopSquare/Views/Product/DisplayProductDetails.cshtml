@@ -6,14 +6,14 @@
 }
 
 <div class="row productCard">
-    <div class="col-4"  id="imageMargin">
+    <div class="col-4" id="imageMargin">
 
         <div>
             <div>
                 @foreach (var item in @Model.Images)
                 {
                     var imageBase64Data = Convert.ToBase64String(item.ImageData);
-                    <img src="data:image/jpg;base64, @imageBase64Data" class="img-fluid pictures"  />
+                    <img src="data:image/jpg;base64, @imageBase64Data" class="img-fluid pictures" />
                 }
             </div>
         </div>
@@ -22,15 +22,13 @@
 
         <div class="productName">@Html.DisplayFor(model => model.Name)</div><hr />
         <div class="names">@Html.DisplayNameFor(model => model.Price)</div>
-        <div>@Model.Price.ToString("C", CultureInfo.CurrentCulture)
-        <!--<span class="input-group-addon">€</span>-->
-        </div>
+        <div>@Model.Price.ToString("C", CultureInfo.CurrentCulture)</div>
         <div class="names">@Html.DisplayNameFor(model => model.Description)</div>
         <div>@Html.DisplayFor(model => model.Description)</div>
         <div class="names">@Html.DisplayNameFor(model => model.Availability)</div>
         <div>@Html.DisplayFor(model => model.Availability)</div>
         <div class="buttonsEditAndExit">
-            <a asp-action="">Add to card</a>
+            <a class="btn btn-success" asp-action="">Add to card</a>
             <a asp-action="EditProductForm" asp-route-id="@Model.Id">Edit</a> |
             <a asp-action="Index">Back to List</a>
         </div>
