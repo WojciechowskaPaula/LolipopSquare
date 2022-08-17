@@ -1,19 +1,21 @@
 ﻿@using LolipopSquare.Models.ViewModels
 @using System.Globalization
+@using Microsoft.AspNetCore.Identity
 @model List<ProductVM>
+@inject SignInManager<IdentityUser> manager
 
 @{
     ViewData["Title"] = "List of Products";
 }
 
 <h3> List of all Products</h3>
-<div class="container">
-    <div class="row g-5">
+<div class="container ">
+    <div class="row d-flex g-5 row-cols-1 row-cols-md-4 row-cols-sm-2">
 
         @foreach (var item in Model)
         {
-            <div class="col-12 col-md-6 col-lg-2 d-flex align-items-stretch">
-                <div class="card" style="width: 11rem;">
+            <div class="col d-flex align-items-stretch">
+                <div class="card" style="width: 15rem;">
                     @{
                         if (item.Images.Count >= 1)
                         {
@@ -26,12 +28,16 @@
                         <h6 class="card-subtitle"><a class ="card-link mb-2 text-muted" asp-controller="Category" asp-action="Index">@item.CategoryName</a></h6>
                         <p class="card-text">@item.Price.ToString("C", new CultureInfo("de-DE"))</p>
                     </div>
-                    <div class="card-body">
-                        <a href="#" class="card-link btn btn-dark">Add to cart </a>
-                        <a href="#" class="card-link">Another link</a>
-                        <a class="btn btn-dark" asp-action="EditProductForm" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-primary" asp-action="DisplayProductDetails" asp-route-id="@item.Id">Details</a>
-                        <a class="btn btn-danger" asp-action="DeleteProductForm" asp-route-productId="@item.Id">Delete</a>
+                    <div class="card-footer">
+                        @if(manager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                        {
+                                <partial name="_ButtonsAdmin" model="@item.Id"></partial>
+                        }
+                        else
+                        {
+                             <partial name="_ButtonsUser" model="@item.Id"></partial>
+                        }
+
                     </div>
                 </div>
             </div>

@@ -44,7 +44,7 @@ namespace LolipopSquare.Controllers
             if(products == null)
             {
                 List<ShoppingCartItem> shoppingCartItems = new List<ShoppingCartItem>();
-                return View (shoppingCartItems);
+                return View();
             }
             else
             {
