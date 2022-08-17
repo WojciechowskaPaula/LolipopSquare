@@ -1,6 +1,21 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> signInManager;
+﻿@using LolipopSquare.Models.DTO
+@using Microsoft.AspNetCore.Identity
+@using System.Text.Json
 
+@inject SignInManager<IdentityUser> signInManager;
+@inject IHttpContextAccessor httpContextAccessor
+@{
+    int quantity = 0;
+    var shoppingCartItems = httpContextAccessor.HttpContext.Session.GetString("product");
+    if (shoppingCartItems != null)
+    {
+        var deserializedItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(shoppingCartItems);
+        if (deserializedItems != null)
+        {
+            quantity = deserializedItems.Count();
+        }
+    }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +62,7 @@
 
                     </ul>
                 </div>
-                <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="GetShoppingCartItems"><i class="fa fa-shopping-cart" style="font-size:25px"></i></a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="GetShoppingCartItems"><i class="fa fa-shopping-cart" style="font-size:25px"></i><div id="quantity">@quantity</div></a>
                 <partial name="_LoginPartial" />
             </div>
         </nav>
