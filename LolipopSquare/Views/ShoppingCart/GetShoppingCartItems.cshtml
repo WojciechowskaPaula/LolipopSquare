@@ -1,0 +1,28 @@
+﻿@using LolipopSquare.Models.DTO
+@model List<ShoppingCartItem>
+
+<h5>Shopping cart</h5>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ProductId</th>
+            <th scope="col">ProductName</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<br />
+<a class="btn btn-dark" asp-controller="Product" asp-action="Index">Back to list</a>

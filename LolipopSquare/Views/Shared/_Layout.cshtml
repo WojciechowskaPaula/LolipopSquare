@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LolipopSquare.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/fontAwesome/css/font-awesome.min.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -31,7 +32,6 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Products</a>
                             </li>
-
                         }
 
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
@@ -47,6 +47,7 @@
 
                     </ul>
                 </div>
+                <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="GetShoppingCartItems"><i class="fa fa-shopping-cart" style="font-size:25px"></i></a>
                 <partial name="_LoginPartial" />
             </div>
         </nav>
