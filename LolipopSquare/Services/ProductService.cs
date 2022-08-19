@@ -18,11 +18,13 @@ namespace LolipopSquare.Services
             _dbContext = dbContext;
         }
 
-        public List<ProductVM> GetAllProducts()
+        public AllProductsVM GetAllProducts(int pageSize, int actualPage, string search)
         {
-            var products = _dbContext.Products.Include(product => product.Images).Include(y => y.Category).ToList();
+            var products = _dbContext.Products.Include(product => product.Images).Include(y => y.Category).ToList().Where(x=>x.Name.ToLower().StartsWith(search.ToLower()));
+           
             List<ProductVM> listOfProducts = new List<ProductVM>();
-            foreach (var item in products)
+            var productsToDisplay = products.Skip(pageSize * (actualPage - 1)).Take(pageSize);
+            foreach (var item in productsToDisplay)
             {
                 ProductVM productVM = new ProductVM();
                 productVM.Id = item.Id;
@@ -35,7 +37,15 @@ namespace LolipopSquare.Services
                 listOfProducts.Add(productVM);
 
             }
-            return listOfProducts;
+            
+            AllProductsVM allProductsVM = new AllProductsVM();
+            allProductsVM.CurrentPage = actualPage;
+            allProductsVM.PageSize = pageSize;
+            allProductsVM.Search = search;
+            allProductsVM.Products = listOfProducts;
+            allProductsVM.Count = products.Count();
+            return allProductsVM;
+            
         }
 
         public ProductImageVM GetProductById(int id)

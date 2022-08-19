@@ -1,5 +1,7 @@
 ﻿using LolipopSquare.Interface;
 using LolipopSquare.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -8,9 +10,11 @@ namespace LolipopSquare.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService _shoppingCartService;
-        public ShoppingCartController(IShoppingCartService shoppingCartService)
+        private readonly SignInManager<IdentityUser> _signInManager;
+        public ShoppingCartController(IShoppingCartService shoppingCartService, SignInManager<IdentityUser> signInManager)
         {
             _shoppingCartService = shoppingCartService;
+            _signInManager = signInManager;
         }
         [HttpGet]
         public IActionResult AddItem(int productId)
@@ -37,11 +41,11 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult GetShoppingCartItems()
         {
-
             var products = HttpContext.Session.GetString("product");
-            if(products == null)
+            if (products == null)
             {
                 List<ShoppingCartItem> shoppingCartItems = new List<ShoppingCartItem>();
                 return View();
@@ -51,8 +55,6 @@ namespace LolipopSquare.Controllers
                 var shoppingCartItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
                 return View(shoppingCartItems);
             }
-
-           
         }
     }
 }

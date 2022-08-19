@@ -17,7 +17,21 @@ namespace LolipopSquare.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var products = _productService.GetAllProducts();
+            var products = _productService.GetAllProducts(2, 1, string.Empty);
+            return View(products);
+        } 
+        [HttpPost]
+        public IActionResult Index(int pageSize, int actualPage, string search)
+        {
+            if(actualPage == 0)
+            {
+                actualPage = 1;
+            }
+            if(search == null)
+            {
+                search = String.Empty;
+            }
+            var products = _productService.GetAllProducts(pageSize, actualPage, search);
             return View(products);
         }
 
