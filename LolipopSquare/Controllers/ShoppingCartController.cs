@@ -56,5 +56,16 @@ namespace LolipopSquare.Controllers
                 return View(shoppingCartItems);
             }
         }
+
+        [HttpPost]
+        public IActionResult DeleteProductFromCart(int id)
+        {
+            var productsToRemoveFromCart = HttpContext.Session.GetString("product");
+            var listOfProducts = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsToRemoveFromCart);
+            listOfProducts.RemoveAll(x => x.ProductId == id);
+            var listOfProductsAsJson = JsonSerializer.Serialize(listOfProducts);
+            HttpContext.Session.SetString("product", listOfProductsAsJson);
+            return RedirectToAction("GetShoppingCartItems");
+        }
     }
 }
