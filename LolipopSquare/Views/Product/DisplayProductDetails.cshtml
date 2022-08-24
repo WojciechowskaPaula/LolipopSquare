@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "DisplayProductDetails";
 }
-
+<form asp-controller="ShoppingCart" asp-action="AddItemForm" method="post" asp-route-productId="@Model.Id">
 <div class="row productCard">
     <div class="col-4" id="imageMargin">
 
@@ -30,14 +30,18 @@
         <div class="names">@Html.DisplayNameFor(model => model.Availability)</div>
         <div>@Html.DisplayFor(model => model.Availability)</div>
         <div class="buttonsEditAndExit">
-
-            <a class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddItem" asp-route-productId="@Model.Id">Add to card</a>
+            <div class="form-group ">
+                <input type="number" min="1" max="100" name="quantity" value="1"/>
+                <button type="submit" class="btn btn-success">Add to card</button>
+            </div>
+            <br />
             <a asp-action="EditProductForm" asp-route-id="@Model.Id">Edit</a>
             <a asp-action="Index">Back to List</a>
         </div>
     </div>
 
 </div>
+</form>
 
 
 

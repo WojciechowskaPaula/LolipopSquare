@@ -3,6 +3,7 @@ using LolipopSquare.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Text.Json;
 
 namespace LolipopSquare.Controllers
@@ -17,7 +18,7 @@ namespace LolipopSquare.Controllers
             _signInManager = signInManager;
         }
         [HttpGet]
-        public IActionResult AddItem(int productId)
+        public IActionResult AddItem(int productId, int quantity = 1)
         {
             List<ShoppingCartItem> listOfItems = new List<ShoppingCartItem>();
             var products = HttpContext.Session.GetString("product");
@@ -25,16 +26,62 @@ namespace LolipopSquare.Controllers
             {
                 var newProduct = _shoppingCartService.GetProduct(productId);
                listOfItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
-               listOfItems.Add(newProduct);
-
+                foreach (var item in listOfItems)
+                {
+                    if(newProduct.ProductId == item.ProductId)
+                    {
+                        item.Quantity = item.Quantity + quantity;
+                    }
+                }
+                if (!listOfItems.Exists(x=>x.ProductId == newProduct.ProductId))
+                {
+                    newProduct.Quantity = quantity;
+                    listOfItems.Add(newProduct);
+                }
             }
             else
             {
                 var product = _shoppingCartService.GetProduct(productId);
+                product.Quantity = quantity;
                 listOfItems.Add(product);
             }
             
             
+            string serializeList = JsonSerializer.Serialize(listOfItems);
+            HttpContext.Session.SetString("product", serializeList);
+            return RedirectToAction("Index", "Product");
+        }
+
+        [HttpPost]
+        public IActionResult AddItemForm(int productId, int quantity = 1)
+        {
+            List<ShoppingCartItem> listOfItems = new List<ShoppingCartItem>();
+            var products = HttpContext.Session.GetString("product");
+            if (products != null)
+            {
+                var newProduct = _shoppingCartService.GetProduct(productId);
+                listOfItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
+                foreach (var item in listOfItems)
+                {
+                    if (newProduct.ProductId == item.ProductId)
+                    {
+                        item.Quantity = item.Quantity + quantity;
+                    }
+                }
+                if (!listOfItems.Exists(x => x.ProductId == newProduct.ProductId))
+                {
+                    newProduct.Quantity = quantity;
+                    listOfItems.Add(newProduct);
+                }
+            }
+            else
+            {
+                var product = _shoppingCartService.GetProduct(productId);
+                product.Quantity = quantity;
+                listOfItems.Add(product);
+            }
+
+
             string serializeList = JsonSerializer.Serialize(listOfItems);
             HttpContext.Session.SetString("product", serializeList);
             return RedirectToAction("Index", "Product");
@@ -48,7 +95,7 @@ namespace LolipopSquare.Controllers
             if (products == null)
             {
                 List<ShoppingCartItem> shoppingCartItems = new List<ShoppingCartItem>();
-                return View();
+                return View(shoppingCartItems);
             }
             else
             {

@@ -19,6 +19,7 @@ namespace LolipopSquare.Services
             shoppingCartItem.ProductId = product.Id;
             shoppingCartItem.ProductName = product.Name;
             shoppingCartItem.Price = product.Price;
+            
             return shoppingCartItem;
         }
     }
