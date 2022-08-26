@@ -32,16 +32,12 @@ else
     </table>
     <br />
     <br />
-
-
 }
 <a class="btn btn-dark" asp-controller="Product" asp-action="Index">Back to list</a>
 
-
-
 @section Scripts{
 <script>
- 
+      document.getElementById('shoppingCart').style.display = 'none';
     function DeleteProduct(id){
         fetch('/ShoppingCart/DeleteProductFromCart?id=' + id, {
             method: 'POST'
@@ -67,7 +63,5 @@ else
              })
         }
     }
-
-  
 </script>
 }
