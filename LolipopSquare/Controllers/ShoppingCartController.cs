@@ -114,5 +114,16 @@ namespace LolipopSquare.Controllers
             HttpContext.Session.SetString("product", listOfProductsAsJson);
             return RedirectToAction("GetShoppingCartItems");
         }
+
+        [HttpPost]
+        public IActionResult EditShoppingCartQuantity(int id, int quantity)
+        {
+            var productsFromSession= HttpContext.Session.GetString("product");
+            var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
+            listOfProduct.Where(x => x.ProductId == id).FirstOrDefault().Quantity = quantity;
+            var listOfProductsAsJson = JsonSerializer.Serialize(listOfProduct);
+            HttpContext.Session.SetString("product", listOfProductsAsJson);
+            return Ok();
+        }
     }
 }
