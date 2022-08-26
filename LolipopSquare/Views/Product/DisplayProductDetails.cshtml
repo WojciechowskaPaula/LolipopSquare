@@ -1,5 +1,7 @@
 ﻿@using System.Globalization
+@using Microsoft.AspNetCore.Identity
 @model LolipopSquare.Models.ProductDetailsVM
+@inject SignInManager<IdentityUser> signInManager
 
 @{
     ViewData["Title"] = "DisplayProductDetails";
@@ -35,8 +37,11 @@
                 <button type="submit" class="btn btn-success">Add to card</button>
             </div>
             <br />
-            <a asp-action="EditProductForm" asp-route-id="@Model.Id">Edit</a>
-            <a asp-action="Index">Back to List</a>
+                @if(signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                {
+                    <a class="btn btn-primary" asp-action="EditProductForm" asp-route-id="@Model.Id">Edit</a>
+                }
+            <a class="btn btn-dark" asp-action="Index">Back to List</a>
         </div>
     </div>
 

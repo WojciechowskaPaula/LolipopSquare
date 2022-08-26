@@ -1,6 +1,7 @@
 ﻿using LolipopSquare.Interface;
 using LolipopSquare.Models;
 using LolipopSquare.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LolipopSquare.Controllers
