@@ -91,6 +91,7 @@ namespace LolipopSquare.Controllers
         [Authorize]
         public IActionResult GetShoppingCartItems()
         {
+            decimal totalPrice = 0m;
             var products = HttpContext.Session.GetString("product");
             if (products == null)
             {
@@ -100,6 +101,11 @@ namespace LolipopSquare.Controllers
             else
             {
                 var shoppingCartItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
+                foreach (var item in shoppingCartItems)
+                {
+                    totalPrice += item.Quantity * item.Price;
+                }
+                ViewBag.TotalPrice = totalPrice;
                 return View(shoppingCartItems);
             }
         }

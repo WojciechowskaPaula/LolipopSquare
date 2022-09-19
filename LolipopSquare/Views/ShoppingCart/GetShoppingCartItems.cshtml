@@ -1,10 +1,12 @@
 ﻿@using LolipopSquare.Models.DTO
+@using System.Globalization
 @model List<ShoppingCartItem>
 
 <h5>Shopping cart</h5>
 @if (Model == null || Model.Count == 0)
 {
     <h1> Shopping cart is empty</h1>
+    <a class="btn btn-dark" asp-controller="Product" asp-action="Index">Back to list</a>
 }
 else
 {
@@ -23,17 +25,30 @@ else
                 <tr>
                     <input type="hidden" asp-for="@item.ProductId">
                     <td>@item.ProductName</td>
-                    <td>@item.Price</td>
+                    <td>@item.Price.ToString("C", new CultureInfo("de-DE"))</td>
                     <td><input type="number" min="1" max="100" asp-for="@item.Quantity" id="@item.ProductId"> <button onclick="UpdateQuantity(@item.ProductId)" class="btn-secondary btn-sm">Save</button></td>
                     <td><button class="btn-danger" onclick="DeleteProduct(@item.ProductId)">Delete</button></td>
                 </tr>
             }
         </tbody>
     </table>
+    <div class="rounded border w-60 total">
+        <div class="textTotal">
+            <p>Shipping: Free </p>
+            <p>Total: @ViewBag.TotalPrice.ToString("C", new CultureInfo("de-DE"))</p>
+        </div>
+    </div>
     <br />
-    <br />
+    <div class="float-end w-20">
+        <div id="buttonsAfterTotal">
+            <a class="btn btn-dark" asp-controller="Product" asp-action="Index">Back to list</a>
+        <a class="btn btn-dark">Confirm Order</a>
+        </div>
+        
+    </div>
 }
-<a class="btn btn-dark" asp-controller="Product" asp-action="Index">Back to list</a>
+
+
 
 @section Scripts{
 <script>
