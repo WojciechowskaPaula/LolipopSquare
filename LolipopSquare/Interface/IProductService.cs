@@ -5,7 +5,7 @@ namespace LolipopSquare.Interface
 {
     public interface IProductService
     {
-        AllProductsVM GetAllProducts(int pageSize, int actualPage, string search);
+        AllProductsVM GetAllProducts(int pageSize, int actualPage, string search, string category);
         ProductImageVM GetProductById(int id);
         void UpdateProduct(ProductImageVM productImageVM);
         Product AddNewProduct(AddNewProductVM productVM);

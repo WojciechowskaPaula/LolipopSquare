@@ -9,20 +9,25 @@ namespace LolipopSquare.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var products = _productService.GetAllProducts(4, 1, string.Empty);
+
+            var products = _productService.GetAllProducts(4, 1, string.Empty, string.Empty);
+            var allCategories = _categoryService.DisplayAllCategories();
+            ViewBag.Categories = allCategories;
             return View(products);
         } 
         [HttpPost]
-        public IActionResult Index(int pageSize, int actualPage, string search)
+        public IActionResult Index(int actualPage, string search, string category, int pageSize = 4)
         {
             if(actualPage == 0)
             {
@@ -32,7 +37,9 @@ namespace LolipopSquare.Controllers
             {
                 search = String.Empty;
             }
-            var products = _productService.GetAllProducts(pageSize, actualPage, search);
+            var products = _productService.GetAllProducts(pageSize, actualPage, search, category);
+            var allCategories = _categoryService.DisplayAllCategories();
+            ViewBag.Categories = allCategories;
             return View(products);
         }
 

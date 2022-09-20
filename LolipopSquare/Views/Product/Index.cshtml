@@ -12,10 +12,18 @@
 <br />
 <form asp-controller="Product" asp-action="Index" method="post" id="indexForm">
     <div class="input-group justify-content-center">
-        <div class="form-outline">
-            <input type="search" asp-for="Search" name="search" class="form-control" placeholder="Search" />
-
-        </div>
+            <div class="dropdown" id="categoryButton">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</button>
+                    <ul class="dropdown-menu">
+            @foreach(var item in (List<Category>)ViewBag.Categories)
+            {
+                <li><a class="dropdown-item" onclick="SelectByCategory('@item.Name')">@item.Name</a></li>
+            }
+                </ul>
+            </div>
+            <div class="form-outline">
+                <input type="search" asp-for="Search" name="search" class="form-control" placeholder="Search" />
+            </div>
         <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
     </div>
     <br />
@@ -85,6 +93,14 @@
     function PagerClick(index){
         document.getElementById("actualPage").value = index;
         document.getElementById("indexForm").submit();
+    }
+
+    function SelectByCategory(category){
+        fetch('/product/index?category='+category,{
+            method:'POST'
+        })
+        .then(res=> res.text())
+        .then(data => document.body.innerHTML=data);
     }
 </script>
 }
