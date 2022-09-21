@@ -131,5 +131,7 @@ namespace LolipopSquare.Controllers
             HttpContext.Session.SetString("product", listOfProductsAsJson);
             return Ok();
         }
+
+       
     }
 }

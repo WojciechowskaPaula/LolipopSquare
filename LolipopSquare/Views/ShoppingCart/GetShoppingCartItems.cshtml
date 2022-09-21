@@ -34,15 +34,15 @@ else
     </table>
     <div class="rounded border w-60 total">
         <div class="textTotal">
-            <p>Shipping: Free </p>
-            <p>Total: @ViewBag.TotalPrice.ToString("C", new CultureInfo("de-DE"))</p>
+            <p>Shipping:&nbsp; Free   </p>
+            <p>Total:&nbsp;&nbsp; @ViewBag.TotalPrice.ToString("C", new CultureInfo("de-DE"))</p>
         </div>
     </div>
     <br />
     <div class="float-end w-20">
         <div id="buttonsAfterTotal">
             <a class="btn btn-dark" asp-controller="Product" asp-action="Index">Back to list</a>
-        <a class="btn btn-dark">Confirm Order</a>
+        <a class="btn btn-dark" asp-action="">Confirm Order</a>
         </div>
         
     </div>
