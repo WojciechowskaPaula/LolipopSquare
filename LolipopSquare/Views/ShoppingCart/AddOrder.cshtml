@@ -1,0 +1,43 @@
+﻿@using LolipopSquare.Models.DTO
+@using System.Globalization
+@using LolipopSquare.Models.ViewModels
+@model OrderSummaryVM
+
+<form asp-action="AddOrder" method="post">
+    <h1>Order details</h1>
+    <div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Product ID</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ShoppingCartItems)
+            {
+                <tr>
+                    <td>@item.ProductId</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <div class="rounded border w-60">
+        <div class="textTotal">
+            <div> Order Number: @Model.OrderId</div>
+            <div> Date of order: @Model.DateOfOrder.ToString("d")</div>
+            <div>Shipping:&nbsp; Free   </div>
+            <div>Total: <strong>@Model.TotalPrice.ToString("C", new CultureInfo("de-DE"))</strong></div>
+        </div>
+        <div />
+        <div class="rounded border w-25"></div>
+</form>

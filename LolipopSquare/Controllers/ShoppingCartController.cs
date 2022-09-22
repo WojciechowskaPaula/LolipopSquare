@@ -132,6 +132,14 @@ namespace LolipopSquare.Controllers
             return Ok();
         }
 
-       
+        [HttpGet]
+        public IActionResult AddOrder(List<ShoppingCartItem> shoppingCartItems)
+        {
+            var productsFromSession = HttpContext.Session.GetString("product");
+            var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
+            var userId = _signInManager.UserManager.GetUserId(User);
+             var vm = _shoppingCartService.AddOrder(listOfProduct, userId);
+            return View(vm);
+        }
     }
 }

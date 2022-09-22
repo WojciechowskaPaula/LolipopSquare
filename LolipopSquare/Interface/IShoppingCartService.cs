@@ -1,4 +1,6 @@
-﻿using LolipopSquare.Models.DTO;
+﻿using LolipopSquare.Models;
+using LolipopSquare.Models.DTO;
+using LolipopSquare.Models.ViewModels;
 using LolipopSquare.Services;
 
 namespace LolipopSquare.Interface
@@ -6,5 +8,6 @@ namespace LolipopSquare.Interface
     public interface IShoppingCartService
     {
         ShoppingCartItem GetProduct(int id);
+        OrderSummaryVM AddOrder(List<ShoppingCartItem> shoppingCartItems, string userId);
     }
 }

@@ -126,23 +126,15 @@ namespace LolipopSquare.Migrations
 
             modelBuilder.Entity("LolipopSquare.Models.ProductOrder", b =>
                 {
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
-
-                    b.Property<int>("OrderId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId");
+                    b.Property<int>("OrderID")
+                        .HasColumnType("int");
 
-                    b.HasIndex("OrderId1");
+                    b.HasKey("ProductId", "OrderID");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("OrderID");
 
                     b.ToTable("ProductOrder");
                 });
@@ -435,13 +427,13 @@ namespace LolipopSquare.Migrations
             modelBuilder.Entity("LolipopSquare.Models.ProductOrder", b =>
                 {
                     b.HasOne("LolipopSquare.Models.Order", "Order")
-                        .WithMany("ProductOrder")
-                        .HasForeignKey("OrderId1")
+                        .WithMany("ProductOrders")
+                        .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("LolipopSquare.Models.Product", "Product")
-                        .WithMany("ProductOrder")
+                        .WithMany("ProductOrders")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -509,14 +501,14 @@ namespace LolipopSquare.Migrations
 
             modelBuilder.Entity("LolipopSquare.Models.Order", b =>
                 {
-                    b.Navigation("ProductOrder");
+                    b.Navigation("ProductOrders");
                 });
 
             modelBuilder.Entity("LolipopSquare.Models.Product", b =>
                 {
                     b.Navigation("Images");
 
-                    b.Navigation("ProductOrder");
+                    b.Navigation("ProductOrders");
                 });
 
             modelBuilder.Entity("LolipopSquare.Models.ApplicationUser", b =>

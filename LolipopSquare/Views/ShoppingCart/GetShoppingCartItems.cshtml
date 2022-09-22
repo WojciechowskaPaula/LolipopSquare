@@ -1,5 +1,6 @@
 ﻿@using LolipopSquare.Models.DTO
 @using System.Globalization
+@using System.Text.Json
 @model List<ShoppingCartItem>
 
 <h5>Shopping cart</h5>
@@ -32,7 +33,7 @@ else
             }
         </tbody>
     </table>
-    <div class="rounded border w-60 total">
+    <div class="rounded border w-60">
         <div class="textTotal">
             <p>Shipping:&nbsp; Free   </p>
             <p>Total:&nbsp;&nbsp; @ViewBag.TotalPrice.ToString("C", new CultureInfo("de-DE"))</p>
@@ -42,7 +43,7 @@ else
     <div class="float-end w-20">
         <div id="buttonsAfterTotal">
             <a class="btn btn-dark" asp-controller="Product" asp-action="Index">Back to list</a>
-        <a class="btn btn-dark" asp-action="">Confirm Order</a>
+        <a class="btn btn-dark" asp-controller="ShoppingCart" asp-action="AddOrder" asp-route-shoppingCartItems=@JsonSerializer.Serialize(Model)>Confirm Order</a>
         </div>
         
     </div>
