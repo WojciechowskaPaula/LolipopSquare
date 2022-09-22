@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LolipopSquare.Models
 {
@@ -6,8 +7,8 @@ namespace LolipopSquare.Models
     {
         public int ProductId { get; set; }
         public Product Product { get; set; }
-        [Key]
-        public int OrderId { get; set; }
+       
+        public int OrderID { get; set; }
         public Order Order { get; set; }
     }
 }

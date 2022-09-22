@@ -6,7 +6,7 @@
         public DateTime DateOfOrder { get; set; }
         public decimal TotalPrice { get; set; }
         public int Quantity { get; set; }
-        public ICollection<ProductOrder> ProductOrder { get; set; }
+        public ICollection<ProductOrder> ProductOrders { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
     }
 }
