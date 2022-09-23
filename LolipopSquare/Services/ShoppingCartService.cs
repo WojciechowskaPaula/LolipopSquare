@@ -59,6 +59,7 @@ namespace LolipopSquare.Services
             vm.DateOfOrder = order.DateOfOrder;
             vm.TotalPrice = order.TotalPrice;
             vm.ShoppingCartItems = shoppingCartItems;
+            vm.ApplicationUser = order.ApplicationUser;
             
 
             return vm;
