@@ -1,92 +1,89 @@
 ﻿@using LolipopSquare.Models.DTO
 @using System.Globalization
 @using LolipopSquare.Models.ViewModels
+@using System.Text.Json
 @model OrderSummaryVM
 
-<form asp-action="AddOrder" method="post">
-
-    <div>
-    </div>
-
-    <h1>Summary</h1>
-    <table class="table table-striped">
-        <thead>
+<h1>Summary</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Product ID</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ShoppingCartItems)
+        {
             <tr>
-                <th scope="col">Product ID</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.Price.ToString("C", new CultureInfo("de-DE"))</td>
+                <td>@item.Quantity</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ShoppingCartItems)
-            {
-                <tr>
-                    <td>@item.ProductId</td>
-                    <td>@item.ProductName</td>
-                    <td>@item.Price</td>
-                    <td>@item.Quantity</td>
-                </tr>
-            }
+        }
 
-        </tbody>
-    </table>
-    
-        <h2>Order details</h2>
-        <div class="form-control textTotal">
-            <div> Order Number: @Model.OrderId</div>
-            <div> Date of order: @Model.DateOfOrder.ToString("d")</div>
-            <div>Shipping:&nbsp; Free   </div>
-            <div>Total: <strong>@Model.TotalPrice.ToString("C", new CultureInfo("de-DE"))</strong></div>
-        </div>
-       <br />
-        <h2>Shipping address</h2>
-        <div class="rounded border">
-            <div class="form-control">
+    </tbody>
+</table>
 
-                <div class="row mb-4">
-                    <div class="col">
+<h2>Order details</h2>
+<div class="form-control textTotal">
+    <div> Order Number: @Model.OrderId</div>
+    <div> Date of order: @Model.DateOfOrder.ToString("d")</div>
+    <div>Shipping:&nbsp; Free   </div>
+    <div>Total: <strong>@Model.TotalPrice.ToString("C", new CultureInfo("de-DE"))</strong></div>
+</div>
+<br />
 
-                        <div class="form-outline">
-                            <label asp-for="@Model.ApplicationUser.FirstName" class="control-label"></label>
-                            <input class="form-control" type="text" asp-for="@Model.ApplicationUser.FirstName" />
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="btn-outline">
-                            <label asp-for="@Model.ApplicationUser.LastName" class="control-label"></label>
-                            <input class="form-control" type="text" asp-for="@Model.ApplicationUser.LastName" />
-                        </div>
+<form asp-action="AddUserData" method="post" >
+    <input type="hidden" asp-for="@Model.OrderId"/>
+    <h2>Shipping address</h2>
+    <div class="rounded border">
+        <div class="form-control">
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <label asp-for="@Model.ApplicationUser.FirstName" class="control-label"></label>
+                        <input class="form-control" type="text" asp-for="@Model.ApplicationUser.FirstName" />
                     </div>
                 </div>
-                <div class="form-outline">
-                    <label asp-for="@Model.ApplicationUser.BuildingNo" class="control-label"></label>
-                    <input class="form-control" type="text" asp-for="@Model.ApplicationUser.BuildingNo" />
+                <div class="col">
+                    <div class="btn-outline">
+                        <label asp-for="@Model.ApplicationUser.LastName" class="control-label"></label>
+                        <input class="form-control" type="text" asp-for="@Model.ApplicationUser.LastName" />
+                    </div>
                 </div>
-                <div class="form-outline">
-                    <label asp-for="@Model.ApplicationUser.Street class=" control-label"></label>
-                    <input class="form-control" type="text" asp-for="@Model.ApplicationUser.Street" />
-                </div>
-                <div class="form-outlinep">
-                    <label asp-for="@Model.ApplicationUser.City" class="control-label"></label>
-                    <input class="form-control" type="text" asp-for="@Model.ApplicationUser.City" />
-                </div>
-                <div class="form-outline">
-                    <label asp-for="@Model.ApplicationUser.ZipCode class=" control-label"></label>
-                    <input class="form-control" type="text" asp-for="@Model.ApplicationUser.ZipCode" />
-                </div>
-                <div class="form-outline">
-                    <label asp-for="@Model.ApplicationUser.PhoneNumber" class="control-label"></label>
-                    <input class="form-control" type="tel" asp-for="@Model.ApplicationUser.PhoneNumber" />
-                </div>
-                <div class="form-outline">
-                    <label asp-for="@Model.ApplicationUser.Email" class="control-label"></label>
-                    <input class="form-control" type="email" asp-for="@Model.ApplicationUser.Email" />
-                </div>
-                
-                
+            </div>
+            <div class="form-outline">
+                <label asp-for="@Model.ApplicationUser.BuildingNo" class="control-label"></label>
+                <input class="form-control" type="text" asp-for="@Model.ApplicationUser.BuildingNo" />
+            </div>
+            <div class="form-outline">
+                <label asp-for="@Model.ApplicationUser.Street class=" control-label"></label>
+                <input class="form-control" type="text" asp-for="@Model.ApplicationUser.Street" />
+            </div>
+            <div class="form-outlinep">
+                <label asp-for="@Model.ApplicationUser.City" class="control-label"></label>
+                <input class="form-control" type="text" asp-for="@Model.ApplicationUser.City" />
+            </div>
+            <div class="form-outline">
+                <label asp-for="@Model.ApplicationUser.ZipCode class=" control-label"></label>
+                <input class="form-control" type="text" asp-for="@Model.ApplicationUser.ZipCode" />
+            </div>
+            <div class="form-outline">
+                <label asp-for="@Model.ApplicationUser.PhoneNumber" class="control-label"></label>
+                <input class="form-control" type="tel" asp-for="@Model.ApplicationUser.PhoneNumber" />
+            </div>
+            <div class="form-outline">
+                <label asp-for="@Model.ApplicationUser.Email" class="control-label"></label>
+                <input class="form-control" type="email" asp-for="@Model.ApplicationUser.Email" />
             </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block mb-4">Confirm order</button>
-
+    </div>
+    <br />
+    <div class="row">
+        <button type="submit" class="btn btn-primary btn-block mb-6">Confirm order</button>
+    </div>
 </form>

@@ -3,6 +3,7 @@ using LolipopSquare.Interface;
 using LolipopSquare.Models;
 using LolipopSquare.Models.DTO;
 using LolipopSquare.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace LolipopSquare.Services
 {
@@ -21,7 +22,7 @@ namespace LolipopSquare.Services
             shoppingCartItem.ProductId = product.Id;
             shoppingCartItem.ProductName = product.Name;
             shoppingCartItem.Price = product.Price;
-            
+
             return shoppingCartItem;
         }
 
@@ -50,9 +51,9 @@ namespace LolipopSquare.Services
                 _dbContext.SaveChanges();
             }
 
-            
-            
-            
+
+
+
 
             OrderSummaryVM vm = new OrderSummaryVM();
             vm.OrderId = (int)orderId;
@@ -60,10 +61,28 @@ namespace LolipopSquare.Services
             vm.TotalPrice = order.TotalPrice;
             vm.ShoppingCartItems = shoppingCartItems;
             vm.ApplicationUser = order.ApplicationUser;
-            
+
 
             return vm;
 
+        }
+
+        public Order AddDeliveryData(string userId, OrderSummaryVM orderSummaryVM)
+        {
+            var user = _dbContext.ApplicationUser.Where(x => x.Id == userId).FirstOrDefault();
+            var order = _dbContext.Orders.Where(x => x.OrderId == orderSummaryVM.OrderId).Include(y => y.ApplicationUser).Where(z => z.ApplicationUser.Id == userId).FirstOrDefault();
+            order.OrderConfirmation = true;
+            user.FirstName = orderSummaryVM.ApplicationUser.FirstName;
+            user.LastName = orderSummaryVM.ApplicationUser.LastName;
+            user.LastName = orderSummaryVM.ApplicationUser.LastName;
+            user.BuildingNo = orderSummaryVM.ApplicationUser.BuildingNo;
+            user.Street = orderSummaryVM.ApplicationUser.Street;
+            user.City = orderSummaryVM.ApplicationUser.City;
+            user.ZipCode = orderSummaryVM.ApplicationUser.ZipCode;
+            user.PhoneNumber = orderSummaryVM.ApplicationUser.PhoneNumber;
+            user.Email = orderSummaryVM.ApplicationUser.Email;
+            _dbContext.SaveChanges();
+            return order;
         }
     }
 }

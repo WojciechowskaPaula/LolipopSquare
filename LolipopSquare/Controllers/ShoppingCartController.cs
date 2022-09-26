@@ -1,5 +1,6 @@
 ﻿using LolipopSquare.Interface;
 using LolipopSquare.Models.DTO;
+using LolipopSquare.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -140,6 +141,17 @@ namespace LolipopSquare.Controllers
             var userId = _signInManager.UserManager.GetUserId(User);
              var vm = _shoppingCartService.AddOrder(listOfProduct, userId);
             return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult AddUserData(OrderSummaryVM orderSummaryVM)
+        {
+            var productsFromSession = HttpContext.Session.GetString("product");
+            var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
+            var userId = _signInManager.UserManager.GetUserId(User);
+            var orderToConfirm = _shoppingCartService.AddDeliveryData(userId, orderSummaryVM);
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index","Product");
         }
     }
 }

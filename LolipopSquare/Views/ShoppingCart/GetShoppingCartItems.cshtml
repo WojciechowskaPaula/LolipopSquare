@@ -40,10 +40,10 @@ else
         </div>
     </div>
     <br />
-    <div class="float-end w-20">
+    <div class="row">
         <div id="buttonsAfterTotal">
             <a class="btn btn-dark" asp-controller="Product" asp-action="Index">Back to list</a>
-        <a class="btn btn-dark" asp-controller="ShoppingCart" asp-action="AddOrder" asp-route-shoppingCartItems=@JsonSerializer.Serialize(Model)>Confirm Order</a>
+        <a class="btn btn-dark" asp-controller="ShoppingCart" asp-action="AddOrder" asp-route-shoppingCartItems=@JsonSerializer.Serialize(Model)>Summary</a>
         </div>
         
     </div>

@@ -9,5 +9,6 @@ namespace LolipopSquare.Interface
     {
         ShoppingCartItem GetProduct(int id);
         OrderSummaryVM AddOrder(List<ShoppingCartItem> shoppingCartItems, string userId);
+        Order AddDeliveryData(string userId, OrderSummaryVM orderSummaryVM);
     }
 }
