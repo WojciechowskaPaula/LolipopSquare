@@ -2,6 +2,10 @@
 {
     public class OrderHistoryVM
     {
+        public OrderHistoryVM()
+        {
+            ApplicationUser = new ApplicationUser();
+        }
         public int OrderId { get; set; }
         public DateTime DateOfOrder { get; set; }
         public decimal TotalPrice { get; set; }
