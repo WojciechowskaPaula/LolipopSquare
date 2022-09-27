@@ -170,7 +170,6 @@ namespace LolipopSquare.Services
             productDetails.Price = productToDisplay.Price;
             productDetails.PriceInUsd = productToDisplay.Price * (decimal)currencyRatesAPI.Rates.USD;
             productDetails.PriceInPLN = productToDisplay.Price * (decimal)currencyRatesAPI.Rates.PLN;
-            productDetails.Availability = productToDisplay.Availability;
             productDetails.Images = images;
             return productDetails;
         }

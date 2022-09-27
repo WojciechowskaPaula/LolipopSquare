@@ -1,38 +1,38 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
     margin-bottom: 60px;
+    background-color: #C6D9FF;
 }
 
-.names{
+.names {
     font-size: 16px;
-    font-weight:700;
+    font-weight: 700;
     margin-top: 10px;
 }
 
-.productName{
+.productName {
     font-size: 30px;
-    margin-bottom:30px;
-    margin-top:10px;
-    font-weight:800;
-    text-align:center;
-
+    margin-bottom: 30px;
+    margin-top: 10px;
+    font-weight: 800;
+    text-align: center;
 }
 
-.buttonsEditAndExit{
+.buttonsEditAndExit {
     margin-top: 20px;
 }
 
@@ -41,24 +41,33 @@ body {
     border-width: 3px;
     border-color: #558dffff;
     background-color: #F7ECF7;
-    padding:20px;
+    padding: 20px;
+    height: auto;
+    margin: 50px;
 }
 
-#imageMargin {
-    padding-left: 0px !important;
-
+.imageMargin {
+    padding: 10px;
+    text-align: center;
 }
 
-.formMargin{
-    margin-left:20px;
+.imagesMargin {
+    margin: 10px;
 }
-.picture{
-    margin-bottom:10px;
+
+.formMargin {
+    margin-left: 20px;
 }
-.imagesInEdit{
-    width:300px;
-    display:inline;
+
+.picture {
+    margin-bottom: 10px;
 }
+
+.imagesInEdit {
+    width: 300px;
+    display: inline;
+}
+
 #quantity {
     height: 18px;
     width: 18px;
@@ -68,26 +77,54 @@ body {
     text-align: center;
     align-items: center;
     padding: 0 0 0 0;
-    font-size:11px;
+    font-size: 11px;
 }
-.total{
+
+.total {
     width: 44%;
-    float:right;
-    text-align:right;
-    margin-right:60px;
-    margin-left:30%;
+    float: right;
+    text-align: right;
+    margin-right: 60px;
+    margin-left: 30%;
     font-weight: 700;
 }
 
-.textTotal{
+.textTotal {
     margin: 5px 50px 5px 0px;
 }
+
 #buttonsAfterTotal {
     margin-right: 60px;
     margin-top: 15px;
 }
-#categoryButton{
-    margin-right:20px;
+
+#categoryButton {
+    margin-right: 20px;
+}
+/*bootstrap custom styles*/
+.card {
+    background-color: #EDF2FC;
+    padding: 10px;
 }
 
-    
+.bg-white {
+    background-color: #E8EDF5;
+}
+
+.img-fluid {
+    height: auto;
+    width: 200px;
+    display: inline;
+}
+
+.table {
+    background-color: #EDF2FC;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #2A4679;
+    border-color: #2A4679;
+}
+
+        /*bootstrap custom styles end*/

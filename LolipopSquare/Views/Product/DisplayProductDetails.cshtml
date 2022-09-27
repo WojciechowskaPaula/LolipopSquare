@@ -7,45 +7,60 @@
     ViewData["Title"] = "DisplayProductDetails";
 }
 <form asp-controller="ShoppingCart" asp-action="AddItemForm" method="post" asp-route-productId="@Model.Id">
-<div class="row productCard">
-    <div class="col-4" id="imageMargin">
+    <div class="productCard">
 
-        <div>
+        <div class="col">
             <div>
-                @foreach (var item in @Model.Images)
-                {
-                    var imageBase64Data = Convert.ToBase64String(item.ImageData);
-                    <img src="data:image/jpg;base64, @imageBase64Data" class="img-fluid pictures" />
-                }
-            </div>
-        </div>
-    </div>
-    <div class="col-8">
 
-        <div class="productName">@Html.DisplayFor(model => model.Name)</div><hr />
-        <div class="names">@Html.DisplayNameFor(model => model.Price)</div>
-        <div>@Model.Price.ToString("C", new CultureInfo("de-DE")) | @Model.PriceInUsd.ToString("C", new CultureInfo("en-US")) | @Model.PriceInPLN.ToString("C", new CultureInfo("pl-PL"))
-        <!--<span class="input-group-addon">€</span>-->
-        </div>
-        <div class="names">@Html.DisplayNameFor(model => model.Description)</div>
-        <div>@Html.DisplayFor(model => model.Description)</div>
-        <div class="names">@Html.DisplayNameFor(model => model.Availability)</div>
-        <div>@Html.DisplayFor(model => model.Availability)</div>
-        <div class="buttonsEditAndExit">
-            <div class="form-group ">
-                <input type="number" min="1" max="100" name="quantity" value="1"/>
-                <button type="submit" class="btn btn-success">Add to card</button>
+            
+            <div class="productName">@Html.DisplayFor(model => model.Name)</div><hr />
+            <div class="row centerText">
+                <div class="col-3">
+                     <div class="names">@Html.DisplayNameFor(model => model.Price)</div>
+                      @Model.Price.ToString("C", new CultureInfo("de-DE")) | @Model.PriceInUsd.ToString("C", new CultureInfo("en-US")) | @Model.PriceInPLN.ToString("C", new CultureInfo("pl-PL"))
+                </div>
+               
+           
+            <div class="col">
+                <div class="names">@Html.DisplayNameFor(model => model.Description)</div>
+            <div>@Html.DisplayFor(model => model.Description)</div>
             </div>
-            <br />
-                @if(signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
-                {
-                    <a class="btn btn-primary" asp-action="EditProductForm" asp-route-id="@Model.Id">Edit</a>
-                }
+            @*<div class="col">
+                <div class="names">@Html.DisplayNameFor(model => model.Availability)</div>
+            <div>@Html.DisplayFor(model => model.Availability)</div>*@
+            </div>
+            
+            <div class="buttonsEditAndExit">
+                <div class="form-group ">
+                    <input type="number" min="1" max="100" name="quantity" value="1" />
+                    <button type="submit" class="btn btn-success">Add to card</button>
+                </div>
+            </div>
+                <br />
+            </div>
+            </div >
+        </div>
+        <div class="col imageMargin">
+            
+               
+                    @foreach (var item in @Model.Images)
+                    {
+                        var imageBase64Data = Convert.ToBase64String(item.ImageData);
+                        <img src="data:image/jpg;base64, @imageBase64Data" class="img-fluid imagesMargin" />
+                    }
+               
+            
+        </div>
+        <br />
+        <div class="text-center">
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+            {
+                <a class="btn btn-primary" asp-action="EditProductForm" asp-route-id="@Model.Id">Edit</a>
+            }
             <a class="btn btn-dark" asp-action="Index">Back to List</a>
         </div>
-    </div>
 
-</div>
+    </div>
 </form>
 
 
