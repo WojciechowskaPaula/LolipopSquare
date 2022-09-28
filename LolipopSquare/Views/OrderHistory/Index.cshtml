@@ -1,0 +1,94 @@
+﻿@using LolipopSquare.Models.ViewModels
+@using System.Globalization
+@model List<OrderHistoryVM>
+
+@{
+    var user = Model.First().ApplicationUser;
+}
+<h1>Order history</h1>
+<div class="row">
+    <div class="col-3 dropdown"> 
+        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button" aria-haspopup="true" id="dropdownMenuButton" aria-expanded="false" data-bs-toggle="dropdown">Show</button>
+         <ul class="dropdown-menu aria-labelledby="dropdownMenuButton"">
+           <li><a class="dropdown-item" asp-controller="OrderHistory" asp-action="Index" asp-route-filter="cancelled">Cancelled</a></li>
+           <li><a class="dropdown-item" asp-controller="OrderHistory" asp-action="Index" asp-route-filter="inProgress">InProgress</a></li>
+         </ul>
+    </div>
+    
+</div>
+<div class="form-control textTotal">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order Number: </th>
+                <th>Date of order: </th>
+                <th>Shipping: Free</th>
+                <th>Order status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.OrderId</td>
+                    <td>@item.DateOfOrder.ToString("d")</td>
+                    <td><strong>@item.TotalPrice.ToString("C", new CultureInfo("de-DE"))</strong></td>
+                    @if(item.OrderConfirmation == true){
+                        <td>In progress</td>
+                    }
+                    else{
+                        <td>Cancelled order</td>
+                    }
+                </tr>
+
+            }
+        </tbody>
+
+    </table>
+</div>
+<br />
+
+
+<h2>Shipping address</h2>
+<div class="rounded border">
+    <div class="form-control">
+        <div class="row mb-4">
+            <div class="col">
+                <div class="form-outline">
+                    <label asp-for="@user.FirstName" class="control-label"></label>
+                    <input readonly class="form-control" type="text" asp-for="@user.FirstName" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="btn-outline">
+                    <label asp-for="@user.LastName" class="control-label"></label>
+                    <input readonly class="form-control" type="text" asp-for="@user.LastName" />
+                </div>
+            </div>
+        </div>
+        <div class="form-outline">
+            <label asp-for="@user.BuildingNo" class="control-label"></label>
+            <input readonly class="form-control" type="text" asp-for="@user.BuildingNo" />
+        </div>
+        <div class="form-outline">
+            <label asp-for="@user.Street class=" control-label"></label>
+            <input readonly class="form-control" type="text" asp-for="@user.Street" />
+        </div>
+        <div class="form-outlinep">
+            <label asp-for="@user.City" class="control-label"></label>
+            <input readonly class="form-control" type="text" asp-for="@user.City" />
+        </div>
+        <div class="form-outline">
+            <label asp-for="@user.ZipCode class=" control-label"></label>
+            <input readonly class="form-control" type="text" asp-for="@user.ZipCode" />
+        </div>
+        <div class="form-outline">
+            <label asp-for="@user.PhoneNumber" class="control-label"></label>
+            <input readonly class="form-control" type="tel" asp-for="@user.PhoneNumber" />
+        </div>
+        <div class="form-outline">
+            <label asp-for="@user.Email" class="control-label"></label>
+            <input readonly class="form-control" type="email" asp-for="@user..Email" />
+        </div>
+    </div>
+</div>
