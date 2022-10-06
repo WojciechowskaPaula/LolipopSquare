@@ -4,6 +4,7 @@ using LolipopSquare.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using LolipopSquare.Models.ViewModels;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,14 @@ builder.Services.AddDistributedMemoryCache();
 var connectionString = builder.Configuration.GetConnectionString("defaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(connectionString));
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{ 
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Password.RequiredLength = 8;
+    options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedEmail = true;
+})
+    
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddHttpContextAccessor();
@@ -27,6 +35,8 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddTransient<IOrderHistoryService, OrderHistoryService>();
+builder.Services.AddTransient<IEmailSender, EmailService>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
