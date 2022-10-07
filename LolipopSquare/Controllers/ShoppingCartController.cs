@@ -4,7 +4,6 @@ using LolipopSquare.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Text.Json;
 
 namespace LolipopSquare.Controllers
@@ -13,6 +12,7 @@ namespace LolipopSquare.Controllers
     {
         private readonly IShoppingCartService _shoppingCartService;
         private readonly SignInManager<IdentityUser> _signInManager;
+
         public ShoppingCartController(IShoppingCartService shoppingCartService, SignInManager<IdentityUser> signInManager)
         {
             _shoppingCartService = shoppingCartService;
@@ -27,18 +27,26 @@ namespace LolipopSquare.Controllers
             {
                 var newProduct = _shoppingCartService.GetProduct(productId);
                listOfItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
-                foreach (var item in listOfItems)
+                if (listOfItems != null)
                 {
-                    if(newProduct.ProductId == item.ProductId)
+                    foreach (var item in listOfItems)
                     {
-                        item.Quantity = item.Quantity + quantity;
+                        if (newProduct.ProductId == item.ProductId)
+                        {
+                            item.Quantity += quantity;
+                        }
+                    }
+                    if (!listOfItems.Exists(x => x.ProductId == newProduct.ProductId))
+                    {
+                        newProduct.Quantity = quantity;
+                        listOfItems.Add(newProduct);
                     }
                 }
-                if (!listOfItems.Exists(x=>x.ProductId == newProduct.ProductId))
+                else
                 {
-                    newProduct.Quantity = quantity;
-                    listOfItems.Add(newProduct);
+                    listOfItems = new List<ShoppingCartItem>();
                 }
+                
             }
             else
             {
@@ -54,6 +62,7 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddItemForm(int productId, int quantity = 1)
         {
             List<ShoppingCartItem> listOfItems = new List<ShoppingCartItem>();
@@ -66,7 +75,7 @@ namespace LolipopSquare.Controllers
                 {
                     if (newProduct.ProductId == item.ProductId)
                     {
-                        item.Quantity = item.Quantity + quantity;
+                        item.Quantity += quantity;
                     }
                 }
                 if (!listOfItems.Exists(x => x.ProductId == newProduct.ProductId))
@@ -111,6 +120,7 @@ namespace LolipopSquare.Controllers
             }
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult DeleteProductFromCart(int id)
         {
@@ -123,6 +133,7 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditShoppingCartQuantity(int id, int quantity)
         {
             var productsFromSession= HttpContext.Session.GetString("product");
@@ -144,6 +155,7 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddUserData(OrderSummaryVM orderSummaryVM)
         {
             var productsFromSession = HttpContext.Session.GetString("product");

@@ -1,7 +1,6 @@
 ﻿using LolipopSquare.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using LolipopSquare.Models.ViewModels;
 
 namespace LolipopSquare.Data
 {
@@ -31,6 +30,5 @@ namespace LolipopSquare.Data
                 .WithMany(o => o.ProductOrders)
                 .HasForeignKey(x => x.ProductId);
         }
-
     }
 }

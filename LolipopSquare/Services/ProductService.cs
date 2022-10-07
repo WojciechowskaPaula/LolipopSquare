@@ -23,25 +23,27 @@ namespace LolipopSquare.Services
             List<Product> products;
             if (!string.IsNullOrEmpty(category))
             {
-                products = _dbContext.Products.Include(product => product.Images).Include(y => y.Category).ToList().Where(x => x.Name.ToLower().StartsWith(search.ToLower())).Where(x => x.Category.Name == category).ToList();
+                products = _dbContext.Products.Include(product => product.Images).Include(y => y.Category).Where(x => x.Name.ToLower().StartsWith(search.ToLower())).Where(x => x.Category.Name == category).ToList();
             }
             else
             {
-                 products = _dbContext.Products.Include(product => product.Images).Include(y => y.Category).ToList().Where(x => x.Name.ToLower().StartsWith(search.ToLower())).ToList();
+                 products = _dbContext.Products.Include(product => product.Images).Include(y => y.Category).Where(x => x.Name.ToLower().StartsWith(search.ToLower())).ToList();
 
             }
             List<ProductVM> listOfProducts = new List<ProductVM>();
             var productsToDisplay = products.Skip(pageSize * (actualPage - 1)).Take(pageSize);
             foreach (var item in productsToDisplay)
             {
-                ProductVM productVM = new ProductVM();
-                productVM.Id = item.Id;
-                productVM.Name = item.Name;
-                productVM.Price = item.Price;
-                productVM.Description = item.Description;
-                productVM.Availability = item.Availability;
-                productVM.Images = item.Images;
-                productVM.CategoryName = item.Category.Name;
+                ProductVM productVM = new ProductVM
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Price = item.Price,
+                    Description = item.Description,
+                    Availability = item.Availability,
+                    Images = item.Images,
+                    CategoryName = item.Category.Name
+                };
                 listOfProducts.Add(productVM);
             }
             
@@ -50,23 +52,25 @@ namespace LolipopSquare.Services
             allProductsVM.PageSize = pageSize;
             allProductsVM.Search = search;
             allProductsVM.Products = listOfProducts;
-            allProductsVM.Count = products.Count();
+            allProductsVM.Count = products.Count;
             return allProductsVM;
-            
         }
 
         public ProductImageVM GetProductById(int id)
         {
             var editData = _dbContext.Products.Include(x=>x.Images).FirstOrDefault(x => x.Id == id);
             var categories = _dbContext.Categories.ToList();
-            ProductImageVM detailVM = new ProductImageVM();
-            detailVM.Id = editData.Id;
-            detailVM.Name = editData.Name;
-            detailVM.Price = editData.Price;
-            detailVM.Description = editData.Description;
-            detailVM.Availability = editData.Availability;
-            detailVM.Images = editData.Images;
-            detailVM.CategoryList = categories;
+            ProductImageVM detailVM = new();
+            if(editData != null) 
+            {
+                detailVM.Id = editData.Id;
+                detailVM.Name = editData.Name;
+                detailVM.Price = editData.Price;
+                detailVM.Description = editData.Description;
+                detailVM.Availability = editData.Availability;
+                detailVM.Images = editData.Images;
+                detailVM.CategoryList = categories;
+            }
             return detailVM;
         }
 
@@ -106,12 +110,14 @@ namespace LolipopSquare.Services
 
         public Product AddNewProduct(AddNewProductVM productVM)
         {
-            Product newProduct = new Product();
-            newProduct.Name = productVM.Name;
-            newProduct.Price = productVM.Price;
-            newProduct.Description = productVM.Description;
-            newProduct.Availability = productVM.Availability;
-            newProduct.CategoryId = productVM.Category.Id;
+            Product newProduct = new Product
+            {
+                Name = productVM.Name,
+                Price = productVM.Price,
+                Description = productVM.Description,
+                Availability = productVM.Availability,
+                CategoryId = productVM.Category.Id
+            };
 
             var listOfImages = new List<Image>();
             foreach (var image in productVM.Images)
@@ -135,15 +141,16 @@ namespace LolipopSquare.Services
         public DeleteProductVM GetProductByIdForDelete(int id)
         {
             var productToRemove = _dbContext.Products.Where(x => x.Id == id).FirstOrDefault();
-            var listOfImages = _dbContext.Images.Where(x => x.ProductId == id).ToList();
             DeleteProductVM productVM = new DeleteProductVM();
-            productVM.Id = productToRemove.Id;
-            productVM.Name = productToRemove.Name;
-            productVM.Description = productToRemove.Description;
-            productVM.Price = productToRemove.Price;
-            productVM.Images = productToRemove.Images;
+            if(productToRemove != null)
+            {
+                productVM.Id = productToRemove.Id;
+                productVM.Name = productToRemove.Name;
+                productVM.Description = productToRemove.Description;
+                productVM.Price = productToRemove.Price;
+                productVM.Images = productToRemove.Images;
+            }
             return productVM;
-
         }
 
         public void DeleteProduct(int id)
@@ -181,7 +188,7 @@ namespace LolipopSquare.Services
             _dbContext.SaveChanges();
         }
 
-        private async Task <CurrencyAPI> GetCurrencyRates()
+        private static async Task <CurrencyAPI> GetCurrencyRates()
         {
             using var client = new HttpClient();
             var url = "https://api.exchangerate.host/latest";

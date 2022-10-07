@@ -19,8 +19,6 @@ namespace LolipopSquare.Services
             var listOfOrders = _applicationDb.Orders.Where(x => x.ApplicationUser.Id == userId).ToList();
             List<OrderHistoryVM> userListOfOrders = new List<OrderHistoryVM>();
            
-
-       
             if (listOfOrders.Count > 0)
             {
                 foreach (var item in listOfOrders)
@@ -33,21 +31,20 @@ namespace LolipopSquare.Services
 
                    userListOfOrders.Add(orderHistory);
                     var user = _applicationDb.ApplicationUser.FirstOrDefault(x => x.Id == userId);
-                    orderHistory.ApplicationUser.Id = user.Id;
-                    orderHistory.ApplicationUser.FirstName = user.FirstName;
-                    orderHistory.ApplicationUser.LastName = user.LastName;
-                    orderHistory.ApplicationUser.BuildingNo = user.BuildingNo;
-                    orderHistory.ApplicationUser.City = user.City;
-                    orderHistory.ApplicationUser.ZipCode = user.ZipCode;
-                    orderHistory.ApplicationUser.PhoneNumber = user.PhoneNumber;
+                    if (user != null)
+                    {
+                        orderHistory.ApplicationUser.Id = user.Id;
+                        orderHistory.ApplicationUser.FirstName = user.FirstName;
+                        orderHistory.ApplicationUser.LastName = user.LastName;
+                        orderHistory.ApplicationUser.BuildingNo = user.BuildingNo;
+                        orderHistory.ApplicationUser.City = user.City;
+                        orderHistory.ApplicationUser.ZipCode = user.ZipCode;
+                        orderHistory.ApplicationUser.PhoneNumber = user.PhoneNumber;
+                    }
+                    
                 }
-                
-
             }
             return userListOfOrders;
         }
-            
-
-           
     }
 }

@@ -57,7 +57,7 @@
                     {
                         var imageBase64Data = Convert.ToBase64String(item.ImageData);
                         <div class="col-6 imagesInEdit">
-                        <img class="img-fluid" src="data:image/jpg;base64, @imageBase64Data" />
+                        <img class="img-fluid" src="data:image/jpg;base64, @imageBase64Data" alt="sweets" />
                         <div class="text-center">
                             <button type="button" class="btn btn-danger" onclick="DeleteImg(@item.Id)">Delete</button>
                         </div>

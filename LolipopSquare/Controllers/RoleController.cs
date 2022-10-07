@@ -26,22 +26,19 @@ namespace LolipopSquare.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-           
             return View();
         }  
         
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task <IActionResult> Create(ProjectRolesVM projectRoles)
         {
             var roleExist = await _roleManager.RoleExistsAsync(projectRoles.RoleName);
             if (!roleExist)
             {
-                var result = await _roleManager.CreateAsync(new IdentityRole(projectRoles.RoleName));
+                await _roleManager.CreateAsync(new IdentityRole(projectRoles.RoleName));
             }
             return View();
         }
-
-
-
     }
 }

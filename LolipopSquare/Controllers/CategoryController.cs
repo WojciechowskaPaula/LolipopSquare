@@ -11,7 +11,7 @@ namespace LolipopSquare.Controllers
         public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
-            
+
         }
 
         [HttpGet]
@@ -24,8 +24,8 @@ namespace LolipopSquare.Controllers
         [HttpGet]
         public IActionResult EditCategoryForm(int id)
         {
-                var categoryToEdit = _categoryService.GetCategoryById(id);
-                return View(categoryToEdit);
+            var categoryToEdit = _categoryService.GetCategoryById(id);
+            return View(categoryToEdit);
         }
 
         [HttpPost]
@@ -34,7 +34,7 @@ namespace LolipopSquare.Controllers
         {
             if (ModelState.IsValid)
             {
-                var categoryToUpdate = _categoryService.UpdateCategory(editCategoryVM);
+                _categoryService.UpdateCategory(editCategoryVM);
             }
             return RedirectToAction("Index");
         }
@@ -71,7 +71,5 @@ namespace LolipopSquare.Controllers
             _categoryService.DeleteCategory(id);
             return RedirectToAction("Index");
         }
-
-
     }
 }

@@ -1,7 +1,5 @@
 ﻿using LolipopSquare.Interface;
-using LolipopSquare.Models;
 using LolipopSquare.Models.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LolipopSquare.Controllers
@@ -26,7 +24,9 @@ namespace LolipopSquare.Controllers
             ViewBag.Categories = allCategories;
             return View(products);
         } 
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(int actualPage, string search, string category, int pageSize = 4)
         {
             if(actualPage == 0)
@@ -89,6 +89,7 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteProduct(int productId)
         {
             _productService.DeleteProduct(productId);
@@ -103,6 +104,7 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteImg(int id)
         {
             _productService.DeleteSingleImg(id);

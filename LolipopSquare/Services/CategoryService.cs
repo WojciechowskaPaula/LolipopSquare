@@ -24,18 +24,25 @@ namespace LolipopSquare.Services
         {
             var category = _applicationDb.Categories.Where(x => x.Id == id).FirstOrDefault();
             EditCategoryVM editCategoryVm = new EditCategoryVM();
-            editCategoryVm.Id = category.Id;
-            editCategoryVm.Name = category.Name;
+            if (category != null)
+            {
+                editCategoryVm.Id = category.Id;
+                editCategoryVm.Name = category.Name;
+            }
             return editCategoryVm;
         }
 
         public Category UpdateCategory(EditCategoryVM editCategoryVM)
         {
             var categoryToUpdate = _applicationDb.Categories.Where(x => x.Id == editCategoryVM.Id).FirstOrDefault();
-            categoryToUpdate.Id = editCategoryVM.Id;
-            categoryToUpdate.Name = editCategoryVM.Name;
-            _applicationDb.SaveChanges();
-            return categoryToUpdate;
+            if(categoryToUpdate != null)
+            {
+                categoryToUpdate.Id = editCategoryVM.Id;
+                categoryToUpdate.Name = editCategoryVM.Name;
+                _applicationDb.SaveChanges();
+                return categoryToUpdate;
+            }
+            throw new Exception("categoryToUpdate cannot be null");
         }
 
         public Category AddNewCategory(AddNewCategoryVM newCategoryVM)
@@ -52,8 +59,12 @@ namespace LolipopSquare.Services
         {
             var category = _applicationDb.Categories.Where(x => x.Id == id).FirstOrDefault();
             DeleteCategoryVM deleteCategoryVM = new DeleteCategoryVM();
-            deleteCategoryVM.Id = category.Id;
-            deleteCategoryVM.Name = category.Name;
+            if(category != null)
+            {
+                deleteCategoryVM.Id = category.Id;
+                deleteCategoryVM.Name = category.Name;
+                return deleteCategoryVM;
+            }
             return deleteCategoryVM;
         }
 
