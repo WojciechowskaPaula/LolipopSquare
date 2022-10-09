@@ -18,6 +18,7 @@ namespace LolipopSquare.Controllers
             _shoppingCartService = shoppingCartService;
             _signInManager = signInManager;
         }
+
         [HttpGet]
         public IActionResult AddItem(int productId, int quantity = 1)
         {
@@ -46,7 +47,6 @@ namespace LolipopSquare.Controllers
                 {
                     listOfItems = new List<ShoppingCartItem>();
                 }
-                
             }
             else
             {
@@ -54,7 +54,6 @@ namespace LolipopSquare.Controllers
                 product.Quantity = quantity;
                 listOfItems.Add(product);
             }
-            
             
             string serializeList = JsonSerializer.Serialize(listOfItems);
             HttpContext.Session.SetString("product", serializeList);
@@ -67,33 +66,36 @@ namespace LolipopSquare.Controllers
         {
             List<ShoppingCartItem> listOfItems = new List<ShoppingCartItem>();
             var products = HttpContext.Session.GetString("product");
-            if (products != null)
+            if (ModelState.IsValid)
             {
-                var newProduct = _shoppingCartService.GetProduct(productId);
-                listOfItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
-                foreach (var item in listOfItems)
+                if (products != null)
                 {
-                    if (newProduct.ProductId == item.ProductId)
+                    var newProduct = _shoppingCartService.GetProduct(productId);
+                    listOfItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
+                    foreach (var item in listOfItems)
                     {
-                        item.Quantity += quantity;
+                        if (newProduct.ProductId == item.ProductId)
+                        {
+                            item.Quantity += quantity;
+                        }
+                    }
+                    if (!listOfItems.Exists(x => x.ProductId == newProduct.ProductId))
+                    {
+                        newProduct.Quantity = quantity;
+                        listOfItems.Add(newProduct);
                     }
                 }
-                if (!listOfItems.Exists(x => x.ProductId == newProduct.ProductId))
+                else
                 {
-                    newProduct.Quantity = quantity;
-                    listOfItems.Add(newProduct);
+                    var product = _shoppingCartService.GetProduct(productId);
+                    product.Quantity = quantity;
+                    listOfItems.Add(product);
                 }
-            }
-            else
-            {
-                var product = _shoppingCartService.GetProduct(productId);
-                product.Quantity = quantity;
-                listOfItems.Add(product);
-            }
 
 
-            string serializeList = JsonSerializer.Serialize(listOfItems);
-            HttpContext.Session.SetString("product", serializeList);
+                string serializeList = JsonSerializer.Serialize(listOfItems);
+                HttpContext.Session.SetString("product", serializeList);
+            }
             return RedirectToAction("Index", "Product");
         }
 
@@ -158,12 +160,19 @@ namespace LolipopSquare.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddUserData(OrderSummaryVM orderSummaryVM)
         {
-            var productsFromSession = HttpContext.Session.GetString("product");
-            var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
-            var userId = _signInManager.UserManager.GetUserId(User);
-            var orderToConfirm = _shoppingCartService.AddDeliveryData(userId, orderSummaryVM);
-            HttpContext.Session.Clear();
-            return RedirectToAction("Index","Product");
+            if (ModelState.IsValid)
+            {
+                var productsFromSession = HttpContext.Session.GetString("product");
+                var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
+                var userId = _signInManager.UserManager.GetUserId(User);
+                var orderToConfirm = _shoppingCartService.AddDeliveryData(userId, orderSummaryVM);
+                HttpContext.Session.Clear();
+                return RedirectToAction("Index", "Product");
+            }
+            else
+            {
+                return View("AddOrder", orderSummaryVM);
+            }
         }
     }
 }

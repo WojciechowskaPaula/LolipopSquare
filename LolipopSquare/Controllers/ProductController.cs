@@ -18,22 +18,21 @@ namespace LolipopSquare.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
             var products = _productService.GetAllProducts(4, 1, string.Empty, string.Empty);
             var allCategories = _categoryService.DisplayAllCategories();
             ViewBag.Categories = allCategories;
             return View(products);
-        } 
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Index(int actualPage, string search, string category, int pageSize = 4)
         {
-            if(actualPage == 0)
+            if (actualPage == 0)
             {
                 actualPage = 1;
             }
-            if(search == null)
+            if (search == null)
             {
                 search = String.Empty;
             }
@@ -46,9 +45,7 @@ namespace LolipopSquare.Controllers
         [HttpGet]
         public IActionResult EditProductForm(int id)
         {
-            
             var edit = _productService.GetProductById(id);
-            
             return View(edit);
         }
 
@@ -60,13 +57,17 @@ namespace LolipopSquare.Controllers
             {
                 _productService.UpdateProduct(productImageVM);
             }
+            else
+            {
+                return View("EditProducForm", productImageVM);
+            }
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult AddNewProductForm()
         {
-            var newProductVMAndCategory =_productService.GetNewProductVM();
+            var newProductVMAndCategory = _productService.GetNewProductVM();
             return View(newProductVMAndCategory);
         }
 
