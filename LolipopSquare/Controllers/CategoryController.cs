@@ -9,9 +9,9 @@ namespace LolipopSquare.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
-        private readonly ILogger _logger;
+        private readonly ILogger <CategoryController>_logger;
 
-        public CategoryController(ICategoryService categoryService, ILogger logger)
+        public CategoryController(ICategoryService categoryService, ILogger <CategoryController> logger)
         {
             _categoryService = categoryService;
             _logger = logger;
