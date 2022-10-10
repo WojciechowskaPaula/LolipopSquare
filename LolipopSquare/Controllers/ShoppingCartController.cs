@@ -1,4 +1,5 @@
 ﻿using LolipopSquare.Interface;
+using LolipopSquare.Models;
 using LolipopSquare.Models.DTO;
 using LolipopSquare.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -12,77 +13,45 @@ namespace LolipopSquare.Controllers
     {
         private readonly IShoppingCartService _shoppingCartService;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly Logger<ShoppingCartController> _logger;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService, SignInManager<IdentityUser> signInManager)
+        public ShoppingCartController(IShoppingCartService shoppingCartService, SignInManager<IdentityUser> signInManager, Logger<ShoppingCartController> logger)
         {
             _shoppingCartService = shoppingCartService;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         [HttpGet]
         public IActionResult AddItem(int productId, int quantity = 1)
         {
-            List<ShoppingCartItem> listOfItems = new List<ShoppingCartItem>();
-            var products = HttpContext.Session.GetString("product");
-            if(products != null)
+            _logger.LogInformation($"action=addItem, productId={productId}, quantity={quantity}");
+            try
             {
-                var newProduct = _shoppingCartService.GetProduct(productId);
-               listOfItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
-                if (listOfItems != null)
-                {
-                    foreach (var item in listOfItems)
-                    {
-                        if (newProduct.ProductId == item.ProductId)
-                        {
-                            item.Quantity += quantity;
-                        }
-                    }
-                    if (!listOfItems.Exists(x => x.ProductId == newProduct.ProductId))
-                    {
-                        newProduct.Quantity = quantity;
-                        listOfItems.Add(newProduct);
-                    }
-                }
-                else
-                {
-                    listOfItems = new List<ShoppingCartItem>();
-                }
-            }
-            else
-            {
-                var product = _shoppingCartService.GetProduct(productId);
-                product.Quantity = quantity;
-                listOfItems.Add(product);
-            }
-            
-            string serializeList = JsonSerializer.Serialize(listOfItems);
-            HttpContext.Session.SetString("product", serializeList);
-            return RedirectToAction("Index", "Product");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AddItemForm(int productId, int quantity = 1)
-        {
-            List<ShoppingCartItem> listOfItems = new List<ShoppingCartItem>();
-            var products = HttpContext.Session.GetString("product");
-            if (ModelState.IsValid)
-            {
+                List<ShoppingCartItem> listOfItems = new List<ShoppingCartItem>();
+                var products = HttpContext.Session.GetString("product");
                 if (products != null)
                 {
                     var newProduct = _shoppingCartService.GetProduct(productId);
                     listOfItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
-                    foreach (var item in listOfItems)
+                    if (listOfItems != null)
                     {
-                        if (newProduct.ProductId == item.ProductId)
+                        foreach (var item in listOfItems)
                         {
-                            item.Quantity += quantity;
+                            if (newProduct.ProductId == item.ProductId)
+                            {
+                                item.Quantity += quantity;
+                            }
+                        }
+                        if (!listOfItems.Exists(x => x.ProductId == newProduct.ProductId))
+                        {
+                            newProduct.Quantity = quantity;
+                            listOfItems.Add(newProduct);
                         }
                     }
-                    if (!listOfItems.Exists(x => x.ProductId == newProduct.ProductId))
+                    else
                     {
-                        newProduct.Quantity = quantity;
-                        listOfItems.Add(newProduct);
+                        listOfItems = new List<ShoppingCartItem>();
                     }
                 }
                 else
@@ -92,33 +61,99 @@ namespace LolipopSquare.Controllers
                     listOfItems.Add(product);
                 }
 
-
                 string serializeList = JsonSerializer.Serialize(listOfItems);
                 HttpContext.Session.SetString("product", serializeList);
+                return RedirectToAction("Index", "Product");
             }
-            return RedirectToAction("Index", "Product");
+            catch (Exception ex)
+            {
+                _logger.LogError($"action=addItem, {ex.Message}", ex);
+                return View("Error", new ErrorViewModel());
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddItemForm(int productId, int quantity = 1)
+        {
+            _logger.LogInformation($"action=AddItemForm, productId='{productId}', quantity='{quantity}'");
+
+            try
+            {
+                List<ShoppingCartItem> listOfItems = new List<ShoppingCartItem>();
+                var products = HttpContext.Session.GetString("product");
+                if (ModelState.IsValid)
+                {
+                    if (products != null)
+                    {
+                        var newProduct = _shoppingCartService.GetProduct(productId);
+                        listOfItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
+                        foreach (var item in listOfItems)
+                        {
+                            if (newProduct.ProductId == item.ProductId)
+                            {
+                                item.Quantity += quantity;
+                                _logger.LogInformation($"action=AddItemForm, msg='Increase the quantity of a product that was already in the shopping cart'");
+                            }
+                        }
+                        if (!listOfItems.Exists(x => x.ProductId == newProduct.ProductId))
+                        {
+                            newProduct.Quantity = quantity;
+                            listOfItems.Add(newProduct);
+                            _logger.LogInformation($"action=AddItemForm, msg='Adding a new product to the cart'");
+                        }
+                    }
+                    else
+                    {
+                        var product = _shoppingCartService.GetProduct(productId);
+                        product.Quantity = quantity;
+                        listOfItems.Add(product);
+                    }
+                    string serializeList = JsonSerializer.Serialize(listOfItems);
+                    HttpContext.Session.SetString("product", serializeList);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Product");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"action=addItemForm msg='{ex.Message}'", ex);
+                return View("Error", new ErrorViewModel());
+            }
+
         }
 
         [HttpGet]
         [Authorize]
         public IActionResult GetShoppingCartItems()
         {
-            decimal totalPrice = 0m;
-            var products = HttpContext.Session.GetString("product");
-            if (products == null)
+            _logger.LogInformation("action=getShoppingCartItems");
+            try
             {
-                List<ShoppingCartItem> shoppingCartItems = new List<ShoppingCartItem>();
-                return View(shoppingCartItems);
-            }
-            else
-            {
-                var shoppingCartItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
-                foreach (var item in shoppingCartItems)
+                decimal totalPrice = 0m;
+                var products = HttpContext.Session.GetString("product");
+                if (products == null)
                 {
-                    totalPrice += item.Quantity * item.Price;
+                    List<ShoppingCartItem> shoppingCartItems = new List<ShoppingCartItem>();
+                    return View(shoppingCartItems);
                 }
-                ViewBag.TotalPrice = totalPrice;
-                return View(shoppingCartItems);
+                else
+                {
+                    var shoppingCartItems = JsonSerializer.Deserialize<List<ShoppingCartItem>>(products);
+                    foreach (var item in shoppingCartItems)
+                    {
+                        totalPrice += item.Quantity * item.Price;
+                    }
+                    ViewBag.TotalPrice = totalPrice;
+                    return View(shoppingCartItems);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"action=getShoppingCartItems msg='{ ex.Message}'", ex);
+                return View("Error", new ErrorViewModel());
             }
         }
 
@@ -126,52 +161,91 @@ namespace LolipopSquare.Controllers
         [HttpPost]
         public IActionResult DeleteProductFromCart(int id)
         {
-            var productsToRemoveFromCart = HttpContext.Session.GetString("product");
-            var listOfProducts = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsToRemoveFromCart);
-            listOfProducts.RemoveAll(x => x.ProductId == id);
-            var listOfProductsAsJson = JsonSerializer.Serialize(listOfProducts);
-            HttpContext.Session.SetString("product", listOfProductsAsJson);
-            return RedirectToAction("GetShoppingCartItems");
+            _logger.LogInformation($"action=deleteProductFromCart, id={id}");
+            try
+            {
+                var productsToRemoveFromCart = HttpContext.Session.GetString("product");
+                var listOfProducts = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsToRemoveFromCart);
+                listOfProducts.RemoveAll(x => x.ProductId == id);
+                var listOfProductsAsJson = JsonSerializer.Serialize(listOfProducts);
+                HttpContext.Session.SetString("product", listOfProductsAsJson);
+                return RedirectToAction("GetShoppingCartItems");
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError($"action=deleteProductFromCart, msg='{ex.Message}'", ex);
+                return View("Error", new ErrorViewModel());
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditShoppingCartQuantity(int id, int quantity)
         {
-            var productsFromSession= HttpContext.Session.GetString("product");
-            var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
-            listOfProduct.Where(x => x.ProductId == id).FirstOrDefault().Quantity = quantity;
-            var listOfProductsAsJson = JsonSerializer.Serialize(listOfProduct);
-            HttpContext.Session.SetString("product", listOfProductsAsJson);
-            return Ok();
+            _logger.LogInformation($"action=editShoppingCartQuantity id={id}, quantity={quantity}");
+
+            try
+            {
+                var productsFromSession = HttpContext.Session.GetString("product");
+                var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
+                listOfProduct.Where(x => x.ProductId == id).FirstOrDefault().Quantity = quantity;
+                var listOfProductsAsJson = JsonSerializer.Serialize(listOfProduct);
+                HttpContext.Session.SetString("product", listOfProductsAsJson);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError($"action=editShoppingCartQuantity msg='{ex.Message}'", ex);
+                return View("Error", new ErrorViewModel());
+            }
         }
 
         [HttpGet]
         public IActionResult AddOrder(List<ShoppingCartItem> shoppingCartItems)
         {
-            var productsFromSession = HttpContext.Session.GetString("product");
-            var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
-            var userId = _signInManager.UserManager.GetUserId(User);
-             var vm = _shoppingCartService.AddOrder(listOfProduct, userId);
-            return View(vm);
+            _logger.LogInformation($"action=addOrder, shoppingCartItems={JsonSerializer.Serialize(shoppingCartItems)}");
+            try
+            {
+                var productsFromSession = HttpContext.Session.GetString("product");
+                var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
+                var userId = _signInManager.UserManager.GetUserId(User);
+                var vm = _shoppingCartService.AddOrder(listOfProduct, userId);
+                return View(vm);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"action=addOrder, msg='{ex.Message}'", ex);
+                return View("Error", new ErrorViewModel());
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddUserData(OrderSummaryVM orderSummaryVM)
         {
-            if (ModelState.IsValid)
+            _logger.LogInformation($"action=addUserData, orderSummaryVM={JsonSerializer.Serialize(orderSummaryVM)}");
+            try
             {
-                var productsFromSession = HttpContext.Session.GetString("product");
-                var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
-                var userId = _signInManager.UserManager.GetUserId(User);
-                var orderToConfirm = _shoppingCartService.AddDeliveryData(userId, orderSummaryVM);
-                HttpContext.Session.Clear();
-                return RedirectToAction("Index", "Product");
+                if (ModelState.IsValid)
+                {
+                    var productsFromSession = HttpContext.Session.GetString("product");
+                    var listOfProduct = JsonSerializer.Deserialize<List<ShoppingCartItem>>(productsFromSession);
+                    var userId = _signInManager.UserManager.GetUserId(User);
+                    var orderToConfirm = _shoppingCartService.AddDeliveryData(userId, orderSummaryVM);
+                    HttpContext.Session.Clear();
+                    return RedirectToAction("Index", "Product");
+                }
+                else
+                {
+                    return View("AddOrder", orderSummaryVM);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                return View("AddOrder", orderSummaryVM);
+                _logger.LogError($"action=addUserData, msg='{ex.Message}'", ex);
+                return View("Error", new ErrorViewModel());
             }
         }
     }
