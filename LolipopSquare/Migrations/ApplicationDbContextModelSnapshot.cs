@@ -36,7 +36,7 @@ namespace LolipopSquare.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("LolipopSquare.Models.Image", b =>
@@ -62,7 +62,7 @@ namespace LolipopSquare.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("LolipopSquare.Models.Order", b =>
@@ -89,7 +89,7 @@ namespace LolipopSquare.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("LolipopSquare.Models.Product", b =>
@@ -121,7 +121,7 @@ namespace LolipopSquare.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("LolipopSquare.Models.ProductOrder", b =>
@@ -136,7 +136,7 @@ namespace LolipopSquare.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("ProductOrder");
+                    b.ToTable("ProductOrder", (string)null);
                 });
 
             modelBuilder.Entity("LolipopSquare.Models.ViewModels.ProjectRolesVM", b =>
@@ -153,7 +153,7 @@ namespace LolipopSquare.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectRolesVM");
+                    b.ToTable("ProjectRolesVM", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

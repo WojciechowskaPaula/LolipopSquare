@@ -39,6 +39,8 @@
 
 <form asp-action="AddUserData" method="post" >
     <input type="hidden" asp-for="@Model.OrderId"/>
+    <input type="hidden" asp-for="@Model.ShoppingCartItems"/>
+    <input type="hidden" asp-for="@Model.ApplicationUser.Orders"/>
     <h2>Shipping address</h2>
     <div class="rounded border">
         <div class="form-control">

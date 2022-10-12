@@ -19,8 +19,6 @@ namespace LolipopSquare.Models
         [Display(Name ="Zip code")]
         public string ZipCode { get; set; }
 
-        [Display(Name ="Phone number")]
-        public override string PhoneNumber { get; set; }
         public ICollection<Order> Orders { get; set; }
     }
 }
