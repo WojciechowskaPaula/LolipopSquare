@@ -28,7 +28,7 @@ namespace LolipopSquare.Controllers
                 var roles = _roleManager.Roles.ToList();
                 return View(roles);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"action=Index, {ex.Message}", ex);
                 return View("Error", new ErrorViewModel());
@@ -40,11 +40,11 @@ namespace LolipopSquare.Controllers
         {
             _logger.LogInformation("action=create");
             return View();
-        }  
-        
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <IActionResult> Create(ProjectRolesVM projectRoles)
+        public async Task<IActionResult> Create(ProjectRolesVM projectRoles)
         {
             _logger.LogInformation($"action=create, projectRoles={JsonSerializer.Serialize(projectRoles)}");
             try
@@ -67,11 +67,13 @@ namespace LolipopSquare.Controllers
                     return View("Create", projectRoles);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"action=create, msg='{ex.Message}'", ex);
                 return View("Error", new ErrorViewModel());
             }
         }
     }
+
 }
+   

@@ -8,7 +8,6 @@ namespace LolipopSquare.Models
         public int Id { get; set; }
 
         [Required]
-        [Range(1,30)]
         public string Name { get; set; }
         public ICollection<Product> Products { get; set; }
     }

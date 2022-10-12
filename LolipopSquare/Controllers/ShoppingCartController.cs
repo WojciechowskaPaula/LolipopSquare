@@ -13,15 +13,16 @@ namespace LolipopSquare.Controllers
     {
         private readonly IShoppingCartService _shoppingCartService;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly Logger<ShoppingCartController> _logger;
+        private readonly ILogger<ShoppingCartController> _logger;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService, SignInManager<IdentityUser> signInManager, Logger<ShoppingCartController> logger)
+        public ShoppingCartController(IShoppingCartService shoppingCartService, SignInManager<IdentityUser> signInManager, ILogger<ShoppingCartController> logger)
         {
             _shoppingCartService = shoppingCartService;
             _signInManager = signInManager;
             _logger = logger;
         }
 
+        //Add to cart from Index
         [HttpGet]
         public IActionResult AddItem(int productId, int quantity = 1)
         {
@@ -72,6 +73,7 @@ namespace LolipopSquare.Controllers
             }
         }
 
+        //Add to cart from Details
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddItemForm(int productId, int quantity = 1)
@@ -82,8 +84,7 @@ namespace LolipopSquare.Controllers
             {
                 List<ShoppingCartItem> listOfItems = new List<ShoppingCartItem>();
                 var products = HttpContext.Session.GetString("product");
-                if (ModelState.IsValid)
-                {
+                
                     if (products != null)
                     {
                         var newProduct = _shoppingCartService.GetProduct(productId);
@@ -111,11 +112,7 @@ namespace LolipopSquare.Controllers
                     }
                     string serializeList = JsonSerializer.Serialize(listOfItems);
                     HttpContext.Session.SetString("product", serializeList);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Product");
-                }
+                    return RedirectToAction("GetShoppingCartItems");
             }
             catch (Exception ex)
             {
@@ -157,7 +154,6 @@ namespace LolipopSquare.Controllers
             }
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult DeleteProductFromCart(int id)
         {
@@ -180,7 +176,6 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult EditShoppingCartQuantity(int id, int quantity)
         {
             _logger.LogInformation($"action=editShoppingCartQuantity id={id}, quantity={quantity}");
