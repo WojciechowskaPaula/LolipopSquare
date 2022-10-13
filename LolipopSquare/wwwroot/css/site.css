@@ -15,7 +15,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-color: #C6D9FF;
+    background-color: #F9F9F9;
 }
 
 .names {
@@ -127,4 +127,46 @@ body {
     border-color: #2A4679;
 }
 
-        /*bootstrap custom styles end*/
+.btn-primary:hover {
+        background-color: #3e68b3;
+        border-color: #3e68b3;
+    }
+
+nav.navbar {
+    background-color: #EDF2FC !important;
+}
+
+.page-link {
+    background-color: #fff;
+    color: #2A4679;
+}
+
+    .page-link:hover {
+        color: #2A4679;
+    }
+
+.page-item.active .page-link {
+    background-color: #94a2bc;
+    border-color: #d4dae4;
+}
+
+
+.btn-secondary {
+    background-color: #fff;
+    color: #192A48;
+    font-weight: 700;
+    border-color: #94a2bc;
+    
+}
+    .btn-secondary:hover, .btn-secondary:active, .btn-secondary:focus, btn-secondary:active:focus {
+        background-color: #3e68b3;
+        border-color: #3e68b3;
+        box-shadow: 0 0 0 0 !important;
+    }
+
+.form-control:focus {
+    box-shadow: 0 0 0 0 !important;
+    border-color: #2A4679;
+  
+}
+/*bootstrap custom styles end*/

@@ -7,9 +7,6 @@
 @{
     ViewData["Title"] = "List of Products";
 }
-
-<h3> List of all Products</h3>
-<br />
 <form asp-controller="Product" asp-action="Index" method="post" id="indexForm">
     <div class="input-group justify-content-center">
             <div class="dropdown" id="categoryButton">
@@ -55,7 +52,6 @@
                             {
                                 <partial name="_ButtonsUser" model="@item.Id"></partial>
                             }
-
                         </div>
                     </div>
                 </div>

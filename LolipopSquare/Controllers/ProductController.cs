@@ -38,7 +38,6 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Index(int actualPage, string search, string category, int pageSize = 4)
         {
             _logger.LogInformation($"action=indexPost, actualPage={actualPage}, search={search}, category={category}, pageSize={pageSize}");
