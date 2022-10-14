@@ -20,9 +20,9 @@
     <table class="table" aria-describedby="Order history">
         <thead>
             <tr>
-                <th>Order Number: </th>
-                <th>Date of order: </th>
-                <th>Shipping: Free</th>
+                <th>Order Number </th>
+                <th>Date of order </th>
+                <th>Total price</th>
                 <th>Order status</th>
             </tr>
         </thead>
@@ -71,7 +71,7 @@
             <input readonly class="form-control" type="text" asp-for="@user.BuildingNo" />
         </div>
         <div class="form-outline">
-            <label asp-for="@user.Street class=" control-label"></label>
+            <label asp-for="@user.Street" class="control-label"></label>
             <input readonly class="form-control" type="text" asp-for="@user.Street" />
         </div>
         <div class="form-outlinep">
@@ -79,7 +79,7 @@
             <input readonly class="form-control" type="text" asp-for="@user.City" />
         </div>
         <div class="form-outline">
-            <label asp-for="@user.ZipCode class=" control-label"></label>
+            <label asp-for="@user.ZipCode" class="control-label"></label>
             <input readonly class="form-control" type="text" asp-for="@user.ZipCode" />
         </div>
         <div class="form-outline">
@@ -88,7 +88,7 @@
         </div>
         <div class="form-outline">
             <label asp-for="@user.Email" class="control-label"></label>
-            <input readonly class="form-control" type="email" asp-for="@user..Email" />
+            <input readonly class="form-control" type="email" asp-for="@user.Email" />
         </div>
     </div>
 </div>

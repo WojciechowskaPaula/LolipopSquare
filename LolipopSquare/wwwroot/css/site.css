@@ -26,7 +26,7 @@ body {
 
 .productName {
     font-size: 30px;
-    margin-bottom: 30px;
+    margin-bottom:20px;
     margin-top: 10px;
     font-weight: 800;
     text-align: center;
@@ -39,7 +39,7 @@ body {
 .productCard {
     border-style: solid;
     border-width: 3px;
-    border-color: #558dffff;
+    border-color: #F9F9F9;
     background-color: #F7ECF7;
     padding: 20px;
     height: auto;
@@ -169,4 +169,37 @@ nav.navbar {
     border-color: #2A4679;
   
 }
+
+
+.nav-link.active {
+    background-color: #3e68b3 !important;
+    color: #fff;
+}
+
+.manageNav {
+    color: #192A48 !important;
+}
+.manageNav.active {
+    color: #fff !important;
+}
 /*bootstrap custom styles end*/
+
+.fa-cart-arrow-down {
+    color: #192A48;
+    font-size: 22px !important;
+}
+
+#buttonFontAwesome{
+    border:none;
+}
+
+#backToList{
+  padding:0;
+  background:unset;
+  color:black;
+  font-size:30px;
+  border:none;
+  width:auto;
+  margin-left:10px;
+ 
+}

@@ -1,6 +1,5 @@
 ﻿using LolipopSquare.Data;
 using LolipopSquare.Interface;
-using LolipopSquare.Models;
 using LolipopSquare.Models.ViewModels;
 
 namespace LolipopSquare.Services
@@ -15,7 +14,6 @@ namespace LolipopSquare.Services
 
         public List<OrderHistoryVM> DisplayOrderHistory(string userId)
         {
-
             var listOfOrders = _applicationDb.Orders.Where(x => x.ApplicationUser.Id == userId).ToList();
             List<OrderHistoryVM> userListOfOrders = new List<OrderHistoryVM>();
            
@@ -36,12 +34,13 @@ namespace LolipopSquare.Services
                         orderHistory.ApplicationUser.Id = user.Id;
                         orderHistory.ApplicationUser.FirstName = user.FirstName;
                         orderHistory.ApplicationUser.LastName = user.LastName;
+                        orderHistory.ApplicationUser.Street = user.Street;
                         orderHistory.ApplicationUser.BuildingNo = user.BuildingNo;
                         orderHistory.ApplicationUser.City = user.City;
                         orderHistory.ApplicationUser.ZipCode = user.ZipCode;
                         orderHistory.ApplicationUser.PhoneNumber = user.PhoneNumber;
+                        orderHistory.ApplicationUser.Email = user.Email;
                     }
-                    
                 }
             }
             return userListOfOrders;
