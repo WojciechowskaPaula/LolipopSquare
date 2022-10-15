@@ -140,7 +140,7 @@ namespace LolipopSquare.Services
 
         public DeleteProductVM GetProductByIdForDelete(int id)
         {
-            var productToRemove = _dbContext.Products.Where(x => x.Id == id).FirstOrDefault();
+            var productToRemove = _dbContext.Products.Where(x => x.Id == id).Include(x=>x.Images).FirstOrDefault();
             DeleteProductVM productVM = new DeleteProductVM();
             if(productToRemove != null)
             {

@@ -17,7 +17,11 @@ namespace LolipopSquare.Models.ViewModels
         public string Description { get; set; }
         public bool Availability { get; set; }
         public Category Category { get; set; }
+
+        [Display(Name ="Category")]
         public List<Category> CategoryList { get; set; }
+
+        [Display(Name ="Category name")]
         public string CategoryName { get; set; }
         public ICollection<Image> Images { get; set; }
 
