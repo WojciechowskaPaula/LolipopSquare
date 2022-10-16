@@ -82,7 +82,7 @@ namespace LolipopSquare.Services
             productToUpdate.Price = productImageVM.Price;
             productToUpdate.Description = productImageVM.Description;
             productToUpdate.Availability = productImageVM.Availability;
-            productToUpdate.CategoryId = productImageVM.Category.Id;
+            productToUpdate.CategoryId = productImageVM.CategoryId;
 
             if(productImageVM.NewImages != null)
             {

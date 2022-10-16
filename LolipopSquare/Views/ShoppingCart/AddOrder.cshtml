@@ -38,49 +38,56 @@
 <br />
 
 <form asp-action="AddUserData" method="post" >
+     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="@Model.OrderId"/>
     <input type="hidden" asp-for="@Model.ShoppingCartItems"/>
     <input type="hidden" asp-for="@Model.ApplicationUser.Orders"/>
     <h2>Shipping address</h2>
-    <div class="rounded border">
-        <div class="form-control">
+        <div class="form-control rounded border">
             <div class="row mb-4">
                 <div class="col">
                     <div class="form-outline">
                         <label asp-for="@Model.ApplicationUser.FirstName" class="control-label"></label>
                         <input class="form-control" type="text" asp-for="@Model.ApplicationUser.FirstName" />
-                    </div>
+                        <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
                 </div>
                 <div class="col">
                     <div class="btn-outline">
                         <label asp-for="@Model.ApplicationUser.LastName" class="control-label"></label>
                         <input class="form-control" type="text" asp-for="@Model.ApplicationUser.LastName" />
+                        <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
                     </div>
                 </div>
             </div>
             <div class="form-outline">
                 <label asp-for="@Model.ApplicationUser.BuildingNo" class="control-label"></label>
                 <input class="form-control" type="text" asp-for="@Model.ApplicationUser.BuildingNo" />
+                <span asp-validation-for="ApplicationUser.BuildingNo" class="text-danger"></span>
             </div>
             <div class="form-outline">
-                <label asp-for="@Model.ApplicationUser.Street class=" control-label"></label>
+                <label asp-for="@Model.ApplicationUser.Street" class="control-label"></label>
                 <input class="form-control" type="text" asp-for="@Model.ApplicationUser.Street" />
+                <span asp-validation-for="ApplicationUser.Street" class="text-danger"></span>
             </div>
             <div class="form-outlinep">
                 <label asp-for="@Model.ApplicationUser.City" class="control-label"></label>
                 <input class="form-control" type="text" asp-for="@Model.ApplicationUser.City" />
+                <span asp-validation-for="ApplicationUser.City" class="text-danger"></span>
             </div>
             <div class="form-outline">
-                <label asp-for="@Model.ApplicationUser.ZipCode class=" control-label"></label>
+                <label asp-for="@Model.ApplicationUser.ZipCode" class="control-label"></label>
                 <input class="form-control" type="text" asp-for="@Model.ApplicationUser.ZipCode" />
+                <span asp-validation-for="ApplicationUser.ZipCode" class="text-danger"></span>
             </div>
             <div class="form-outline">
                 <label asp-for="@Model.ApplicationUser.PhoneNumber" class="control-label"></label>
                 <input class="form-control" type="tel" asp-for="@Model.ApplicationUser.PhoneNumber" />
+                <span asp-validation-for="@Model.ApplicationUser.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-outline">
                 <label asp-for="@Model.ApplicationUser.Email" class="control-label"></label>
                 <input class="form-control" type="email" asp-for="@Model.ApplicationUser.Email" />
+                <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
             </div>
         </div>
     </div>

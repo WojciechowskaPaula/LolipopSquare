@@ -84,17 +84,19 @@ namespace LolipopSquare.Controllers
         public IActionResult UpdateProduct(ProductImageVM productImageVM)
         {
             _logger.LogInformation($"action=UpdateProduct, productImageVm='{JsonSerializer.Serialize(productImageVM)}'");
+            
             try
             {
                 if (ModelState.IsValid)
                 {
                     _productService.UpdateProduct(productImageVM);
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    return View("EditProducForm", productImageVM);
+                    return RedirectToAction("EditProductForm", productImageVM);
                 }
-                return RedirectToAction("Index");
+                
             }
             catch(Exception ex)
             {
@@ -194,7 +196,6 @@ namespace LolipopSquare.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteImg(int id)
         {
             _logger.LogInformation($"action=deleteImg, id={id}");
