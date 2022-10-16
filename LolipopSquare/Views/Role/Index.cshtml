@@ -8,8 +8,7 @@
     <thead>
         <tr>
             <th scope="col">Name</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th scope="col">Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -17,10 +16,9 @@
         {
             <tr>
                 <td>@item.Name</td>
-                <td><a class="btn btn-primary">Edit</a></td>
-                <td><a class="btn btn-danger">Delete</td>
+                <td><a class="btn btn-danger" asp-action="DeleteRole" asp-route-roleId="@item.Id"> Delete </a> </td>
             </tr>
         }
     </tbody>
 </table>
-<a class="btn btn-dark">Add new</a>
+<a class="btn btn-primary" asp-controller="Role" asp-action="Create">Add new</a>

@@ -55,7 +55,7 @@ namespace LolipopSquare.Controllers
                     if (!roleExist)
                     {
                         await _roleManager.CreateAsync(new IdentityRole(projectRoles.RoleName));
-                        return View();
+                        return RedirectToAction("Index");
                     }
                     else
                     {
@@ -71,6 +71,40 @@ namespace LolipopSquare.Controllers
             {
                 _logger.LogError($"action=create, msg='{ex.Message}'", ex);
                 return View("Error", new ErrorViewModel());
+            }
+        }
+
+        [HttpGet]
+        public async Task <IActionResult> DeleteRole(string roleId)
+        {
+            _logger.LogInformation($"action=deleteRole, roleId={roleId}");
+            var role = await _roleManager.FindByIdAsync(roleId);
+            return View(role);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            _logger.LogInformation($"action=deleteRole, roleId={Id}");
+            try
+            {
+                var role = await _roleManager.FindByIdAsync(Id);
+                if(role.Id != null)
+                {
+                    await _roleManager.DeleteAsync(role);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"action=deleteRole, msg='{ex.Message}'", ex);
+                return View("Error");
             }
         }
     }

@@ -11,7 +11,7 @@ namespace LolipopSquare.Models
         [Required]
         public string Name { get; set; }
 
-        //[Range(1,100000)]
+        [Range(1, 100000)]
         public decimal Price { get; set; }
 
         [Display(Name ="Product description")]
