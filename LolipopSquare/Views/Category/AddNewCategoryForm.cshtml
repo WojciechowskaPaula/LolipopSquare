@@ -4,9 +4,12 @@
     ViewData["Title"] = "AddNewCategoryForm";
 }
 
-<h1>AddNewCategoryForm</h1>
+    <div class="row">
+      <a class="col-1 backToListArrow"asp-action="Index"> <i class="fa fa-long-arrow-left" aria-hidden="true" id="backToList"></i></a>
+<h1 class="h1FontSize col">Add new category</h1>
+    </div>
 
-<h4>AddNewCategoryVM</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,9 +27,9 @@
         </form>
     </div>
 </div>
-
+<br />
 <div>
-    <a asp-action="Index">Back to List</a>
+    
 </div>
 
 @section Scripts {

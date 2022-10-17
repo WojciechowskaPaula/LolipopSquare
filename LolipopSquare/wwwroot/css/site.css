@@ -1,10 +1,12 @@
-html {
+html{
     font-size: 14px;
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 @media (min-width: 768px) {
     html {
         font-size: 16px;
+       
     }
 }
 
@@ -16,6 +18,7 @@ html {
 body {
     margin-bottom: 60px;
     background-color: #F9F9F9;
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 .names {
@@ -182,6 +185,17 @@ nav.navbar {
 .manageNav.active {
     color: #fff !important;
 }
+
+.btn-info {
+    background-color: #ac97a9;
+    color: #fff;
+    border-color: #ac97a9;
+}
+    .btn-info:hover, .btn-info:active, .btn-info:focus, btn-infoy:active:focus {
+        background-color: #dec3d9;
+        border-color: #dec3d9;
+        box-shadow: 0 0 0 0 !important;
+    }
 /*bootstrap custom styles end*/
 
 .fa-cart-arrow-down {
@@ -201,5 +215,20 @@ nav.navbar {
   border:none;
   width:auto;
   margin-left:10px;
- 
+}
+
+.buttonsShared {
+    display: flex;
+    justify-content: space-between;
+}
+
+.h1FontSize{
+    font-size: 30px;
+}
+.h1Margin {
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+.backToListArrow{
+    padding:0;
 }

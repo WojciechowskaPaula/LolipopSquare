@@ -28,6 +28,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LolipopSquare.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/fontAwesome/css/font-awesome.min.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -62,7 +66,7 @@
 
                     </ul>
                 </div>
-               
+
 
                 <a id="shoppingCart" class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="GetShoppingCartItems"><i class="fa fa-shopping-cart" style="font-size:25px"></i><div id="quantity">@quantity</div></a>
                 <partial name="_LoginPartial" />

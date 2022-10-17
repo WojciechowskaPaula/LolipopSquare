@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<LolipopSquare.Models.Category>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Categories";
 }
 
-<h1>Index</h1>
+<h1 class="h1FontSize h1Margin">Categories</h1>
 
 <p>
-    <a asp-action="AddNewCategoryForm">Create New</a>
+    <a class="btn btn-secondary" asp-action="AddNewCategoryForm">Add new</a>
 </p>
 <table class="table" aria-describedby="list of categories">
     <thead>
@@ -25,8 +25,8 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="EditCategoryForm" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DeleteCategory" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-info" asp-action="EditCategoryForm" asp-route-id="@item.Id">Edit</a> 
+                <a class="btn btn-danger" asp-action="DeleteCategory" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

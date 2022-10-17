@@ -1,8 +1,9 @@
 ﻿@model int
 
-<div>
-                        <a class="btn btn-dark" asp-action="EditProductForm" asp-route-id="@Model">Edit</a>
-                        <a class="btn btn-primary" asp-action="DisplayProductDetails" asp-route-id="@Model">Details</a>
-                        <a class="btn btn-danger" asp-action="DeleteProductForm" asp-route-productId="@Model">Delete</a>
+<div class="row buttonsShared">
     
+                        <a class="btn btn-info col" asp-action="EditProductForm" asp-route-id="@Model">Edit</a>
+                        <a class="btn btn-primary col" asp-action="DisplayProductDetails" asp-route-id="@Model">Details</a>
+                        <a class="btn btn-danger col" asp-action="DeleteProductForm" asp-route-productId="@Model">Delete</a>
+   
 </div>
