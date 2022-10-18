@@ -8,11 +8,11 @@ namespace LolipopSquare.Controllers
     public class OrderHistoryController : Controller
     {
         private readonly IOrderHistoryService _orderHistoryService;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger <OrderHistoryController>_logger;
         
 
-        public OrderHistoryController(IOrderHistoryService orderHistoryService, SignInManager<IdentityUser> signInManager, ILogger<OrderHistoryController>logger)
+        public OrderHistoryController(IOrderHistoryService orderHistoryService, SignInManager<ApplicationUser> signInManager, ILogger<OrderHistoryController>logger)
         {
             _orderHistoryService = orderHistoryService;
             _signInManager = signInManager;

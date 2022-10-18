@@ -5,6 +5,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using LolipopSquare.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -17,9 +18,9 @@ namespace LolipopSquare.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager)
+        public RegisterConfirmationModel(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }

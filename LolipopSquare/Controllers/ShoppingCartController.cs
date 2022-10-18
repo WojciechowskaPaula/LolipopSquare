@@ -12,10 +12,10 @@ namespace LolipopSquare.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService _shoppingCartService;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<ShoppingCartController> _logger;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService, SignInManager<IdentityUser> signInManager, ILogger<ShoppingCartController> logger)
+        public ShoppingCartController(IShoppingCartService shoppingCartService, SignInManager<ApplicationUser> signInManager, ILogger<ShoppingCartController> logger)
         {
             _shoppingCartService = shoppingCartService;
             _signInManager = signInManager;

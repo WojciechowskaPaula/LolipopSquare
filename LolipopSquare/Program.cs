@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using LolipopSquare.Models.ViewModels;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Serilog;
+using LolipopSquare.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var logger = new LoggerConfiguration()
@@ -24,7 +25,7 @@ builder.Services.AddDistributedMemoryCache();
 var connectionString = builder.Configuration.GetConnectionString("defaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(connectionString));
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 { 
     options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequiredLength = 8;

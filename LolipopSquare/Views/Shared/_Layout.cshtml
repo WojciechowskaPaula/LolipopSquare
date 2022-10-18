@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @using System.Text.Json
 
-@inject SignInManager<IdentityUser> signInManager;
+@inject SignInManager<ApplicationUser> signInManager;
 @inject IHttpContextAccessor httpContextAccessor
 @{
     int quantity = 0;
