@@ -11,7 +11,6 @@ namespace LolipopSquare.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
-        public DbSet<LolipopSquare.Models.ViewModels.ProjectRolesVM>? ProjectRolesVM { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<ProductOrder> ProductOrder { get; set; }
 
