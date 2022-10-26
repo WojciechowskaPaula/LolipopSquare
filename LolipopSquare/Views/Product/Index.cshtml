@@ -9,7 +9,10 @@
 }
 <form asp-controller="Product" asp-action="Index" method="post" id="indexForm">
     <div class="input-group justify-content-center">
-            <div class="dropdown" id="categoryButton">
+            
+        @if(manager.IsSignedIn(User) && User.IsInRole("Administrator"))
+        {   
+             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</button>
                     <ul class="dropdown-menu">
             @foreach(var item in (List<Category>)ViewBag.Categories)
@@ -18,7 +21,21 @@
             }
                 </ul>
             </div>
-            <div class="form-outline">
+            <a class="btn btn-secondary" asp-controller="Product" asp-action="AddNewProductForm" id="AddNewProductBtn">Add new</a>
+        }
+        else
+        {
+            <div class="dropdown marginAdminBtn">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</button>
+                    <ul class="dropdown-menu">
+            @foreach(var item in (List<Category>)ViewBag.Categories)
+            {
+                <li><a class="dropdown-item " onclick="SelectByCategory('@item.Name')">@item.Name</a></li>
+            }
+                </ul>
+            </div>
+        }
+        <div class="form-outline">
                 <input type="search" asp-for="Search" name="search" class="form-control" placeholder="Search" />
             </div>
         <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>

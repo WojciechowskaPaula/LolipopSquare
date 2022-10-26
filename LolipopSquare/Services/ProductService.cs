@@ -116,7 +116,7 @@ namespace LolipopSquare.Services
                 Price = productVM.Price,
                 Description = productVM.Description,
                 Availability = productVM.Availability,
-                CategoryId = productVM.Category.Id
+                CategoryId = productVM.CategoryId,
             };
 
             var listOfImages = new List<Image>();

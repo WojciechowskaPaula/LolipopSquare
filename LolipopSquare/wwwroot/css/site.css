@@ -101,9 +101,6 @@ body {
     margin-top: 15px;
 }
 
-#categoryButton {
-    margin-right: 20px;
-}
 /*bootstrap custom styles*/
 .card {
     background-color: #EDF2FC;
@@ -231,4 +228,18 @@ nav.navbar {
 }
 .backToListArrow{
     padding:0;
+}
+#AddNewProductBtn {
+    margin-right: 15px;
+    margin-left: 15px;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s
+}
+.marginButtons{
+    margin: 5px;
+}
+
+.marginAdminBtn {
+    margin-right: 15px;
 }

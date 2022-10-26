@@ -15,8 +15,8 @@ namespace LolipopSquare.Models.ViewModels
         [StringLength(300, MinimumLength = 10, ErrorMessage = "Description must range from 10-300 characters ")]
         public string Description { get; set; }
         public bool Availability { get; set; }
-        public Category Category { get; set; }
-        public List<Category> CategoryList { get; set; }
+        public int CategoryId { get; set; }
+        public List<Category>? CategoryList { get; set; }
 
         [Display(Name = "Upload images")]
         public ICollection<IFormFile> Images { get; set; }
